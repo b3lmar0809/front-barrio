@@ -1,6 +1,6 @@
 /**
  * AuthTemplate class
- * @Version: 1.0.0 - 04 may. 2026
+ * @Version: 1.0.0 - 0 may. 2026
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 04 may. 2026
  */
