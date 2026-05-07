@@ -1,0 +1,66 @@
+﻿/**
+ * StatCard class
+ * @Version: 1.0.0 - 06 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 06 may. 2026
+ */
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid transparent;
+    background-color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 0.8125rem;
+    color: #9ca3af;
+    margin-top: 0.125rem;
+}
+
+/* variants — border-left accent + value tint */
+.success {
+    border-left-color: #22c55e;
+}
+.success .value {
+    color: #166534;
+}
+
+.warning {
+    border-left-color: #f59e0b;
+}
+.warning .value {
+    color: #854d0e;
+}
+
+.danger {
+    border-left-color: #ef4444;
+}
+.danger .value {
+    color: #991b1b;
+}
+
+.info {
+    border-left-color: #4f46e5;
+}
+.info .value {
+    color: #1e40af;
+}

@@ -1,0 +1,15 @@
+﻿/**
+ * SearchBar class
+ * @Version: 1.0.0 - 06 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 06 may. 2026
+ */
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.inputWrapper {
+    flex: 1;
+}
