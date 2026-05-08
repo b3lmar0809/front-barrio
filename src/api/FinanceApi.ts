@@ -29,8 +29,8 @@ export interface Balance {
     period: string
 }
 
-export const getFinance = async (userId: number): Promise<Finance> => {
-    const res = await api.get<Finance>(`finance/${userId}`)
+export const getFinances = async (userId: number): Promise<Finance[]> => {
+    const res = await api.get<Finance[]>(`/finance/${userId}`)
     return res.data
 }
 

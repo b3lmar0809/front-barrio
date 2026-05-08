@@ -14,8 +14,8 @@ export interface Notification {
     date: string
 }
 
-export const getNotification = async (userId: number): Promise<Notification> => {
-  const res = await api.get<Notification>(`/notification/${userId}`)
+export const getNotifications = async (userId: number): Promise<Notification[]> => {
+  const res = await api.get<Notification[]>(`/notifications/${userId}`)
   return res.data
 }
 

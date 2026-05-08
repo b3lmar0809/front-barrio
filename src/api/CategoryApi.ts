@@ -22,8 +22,8 @@ export const getCategory = async(userId : number): Promise<Category[]> => {
     return res.data
 }
 
-export const createConst = async (data : CategoryRequest): Promise<CategoryRequest> => {
-    const res = await  api.post<CategoryRequest>('/categories', data)
+export const createCategory = async (data: CategoryRequest): Promise<Category> => {
+    const res = await api.post<Category>('/categories', data)
     return res.data
 }
 
