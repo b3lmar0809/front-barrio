@@ -41,3 +41,8 @@ export const registerUser = async (data: RegisterRequest): Promise<AuthResponse>
 export const logoutUser = async (): Promise<void> => {
   await axiosInstance.post('/auth/logout')
 }
+
+export const getMe = async (): Promise<AuthResponse> => {
+  const response = await axiosInstance.get<AuthResponse>('/auth/me')
+  return response.data
+}

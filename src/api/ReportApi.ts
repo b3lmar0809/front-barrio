@@ -33,7 +33,12 @@ export interface SaleReport {
 }
 
 export const getDashboard = async (userId: number): Promise<Dashboard> => {
-    const res = await api.get<Dashboard>(`/reports/${userId}`)
+    const res = await api.get<Dashboard>(`/reports/${userId}/dashboard`)
+    return res.data
+}
+
+export const getTopProducts = async (userId: number, period: string): Promise<ProductStats[]> => {
+    const res = await api.get<ProductStats[]>(`/reports/${userId}/top-products?period=${period}`)
     return res.data
 }
 
@@ -42,7 +47,15 @@ export const getSaleReport = async (userId: number, period: string): Promise<Sal
   return res.data  
 }
 
-export const getSlowStock = async (userId: number): Promise<any[]> => {
-  const res = await api.get<any[]>(`/report/${userId}/low-stock`)
+export interface LowStockProduct {
+    id: number
+    name: string
+    stock: number
+    minStock: number
+    barcode: string
+}
+
+export const getLowStock = async (userId: number): Promise<LowStockProduct[]> => {
+    const res = await api.get<LowStockProduct[]>(`/reports/${userId}/low-stock`)
     return res.data
 }

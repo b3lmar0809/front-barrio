@@ -50,7 +50,7 @@ export const searchByText = async (userId: number, q : string): Promise<SearchRe
 }
 
 export const searchByCode = async(barCode : string): Promise<SearchResponse> => {
-    const res = await api.get<SearchResponse>(`products/serch?code=${barCode}`)
+    const res = await api.get<SearchResponse>(`/products/search?barcode=${barCode}`)
     return res.data
 }
 
