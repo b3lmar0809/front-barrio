@@ -44,6 +44,7 @@ const AppRouter: React.FC = () => {
                     <Route path="/reportes" element={<ReportsPage />} />
                     <Route path="/notificaciones" element={<NotificationsPage />} />
                     <Route path="/perfil" element={<ProfilePage />} />
+                    <Route path="/ajustes" element={<ProfilePage />} />
                 </Route>
             </Route>
         </Routes>
