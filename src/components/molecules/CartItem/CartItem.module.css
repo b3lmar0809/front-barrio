@@ -1,0 +1,93 @@
+/**
+*module.CartItem class
+*
+* @version 1.0.0 - 07 may. 2026
+* @author Matias Belmar - mati.belmar0625@gmail.com
+* @since 1.0.0 - 07 may. 2026
+*
+**/
+
+.row {
+    display: grid;
+    grid-template-columns: 110px 1fr 70px 90px 90px 36px;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row:hover {
+    background: #f8fafc;
+}
+
+.barcode {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1e293b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.qty {
+    width: 100%;
+    padding: 0.25rem 0.375rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    text-align: center;
+    color: #1e293b;
+    background: #f8fafc;
+}
+
+.qty:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #ffffff;
+}
+
+.price {
+    font-size: 0.875rem;
+    color: #64748b;
+    text-align: right;
+}
+
+.subtotal {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: right;
+}
+
+.removeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 0.375rem;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.removeBtn:hover {
+    background: #fef2f2;
+    color: #ef4444;
+}
