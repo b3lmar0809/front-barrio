@@ -10,7 +10,7 @@ export interface Product {
     id: number
     name:string
     category: string
-    barCode: string
+    barcode: string
     boxPrice: number
     unitCost: number
     salePrice: number
@@ -34,7 +34,7 @@ export interface ProductRequest {
 }
 
 export interface SearchResponse {
-    products: Product[]
+    product: Product[]
     total: number
     searchType: string
 }
