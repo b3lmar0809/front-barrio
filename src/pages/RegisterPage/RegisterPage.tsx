@@ -28,8 +28,10 @@ const RegisterPage: React.FC = () => {
             const user = await registerUser(data)
             dispatch(setUser(user))
             navigate('/dashboard')
-        } catch {
-            setError('No se pudo crear la cuenta. Intenta nuevamente.')
+        } catch (err: unknown) {
+            const axiosErr = err as { response?: { data?: { message?: string } } }
+            const msg = axiosErr?.response?.data?.message
+            setError(msg ?? 'No se pudo crear la cuenta. Intenta nuevamente.')
         } finally {
             setIsLoading(false)
         }
