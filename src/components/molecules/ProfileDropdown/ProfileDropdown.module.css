@@ -1,0 +1,109 @@
+/**
+ * ProfileDropdown.module class
+ * @Version: 1.0.0 - 10 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 10 may. 2026
+ */
+
+.wrapper {
+    position: relative;
+}
+
+.iconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 0.5rem;
+    border: none;
+    background: none;
+    color: #6b7280;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.iconBtn:hover,
+.iconBtnActive {
+    background-color: #f3f4f6;
+    color: #4f46e5;
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 220px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    z-index: 50;
+}
+
+.dropdownHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.dropdownAvatar {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.dropdownName {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.dropdownCompany {
+    font-size: 0.8125rem;
+    color: #6b7280;
+    margin-top: 0.125rem;
+}
+
+.dropdownDivider {
+    border: none;
+    border-top: 1px solid #f3f4f6;
+    margin: 0;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #374151;
+    transition: background-color 0.15s;
+}
+
+.dropdownItem:hover {
+    background-color: #f9fafb;
+}
+
+.dropdownItemDanger {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #ef4444;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s;
+}
+
+.dropdownItemDanger:hover {
+    background-color: #fef2f2;
+}
