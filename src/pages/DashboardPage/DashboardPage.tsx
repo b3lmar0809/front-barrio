@@ -13,6 +13,7 @@ import type { Dashboard, ProductStats } from '../../api/ReportApi'
 import { formatCLP, formatDate } from '../../utils/formatters'
 import { useAppSelector } from '../../app/hooks'
 import StatCard from '../../components/molecules/StatCard/StatCard'
+import TopProductsTable from '../../components/organisms/TopProductsTable/TopProductsTable'
 import Spinner from '../../components/atoms/Spinner/Spinner'
 import Button from '../../components/atoms/Button/Button'
 import styles from './DashboardPage.module.css'
@@ -97,30 +98,7 @@ const DashboardPage: React.FC = () => {
                     {/* Sección 2 — Top productos */}
                     <section className={styles.section}>
                         <h2 className={styles.sectionTitle}>Productos más vendidos este mes</h2>
-                        {topProducts.length === 0 ? (
-                            <p className={styles.empty}>Sin ventas este mes.</p>
-                        ) : (
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Producto</th>
-                                        <th>Unidades vendidas</th>
-                                        <th>Total generado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {topProducts.map((p) => (
-                                        <tr key={p.productId}>
-                                            <td>{p.rankingVentas}</td>
-                                            <td>{p.productName}</td>
-                                            <td>{p.totalSold}</td>
-                                            <td>{formatCLP(p.totalRevenue)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        )}
+                        <TopProductsTable products={topProducts} />
                     </section>
 
                     {/* Sección 3 — Accesos rápidos */}
