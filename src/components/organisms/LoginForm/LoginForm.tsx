@@ -1,10 +1,11 @@
 /**
  * LoginForm class
- * @Version: 1.0.0 - 04 may. 2026
+ * @Version: 1.1.0 - 10 may. 2026
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 04 may. 2026
  */
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import FormField from '../../molecules/FormField/FormField'
 import Button from '../../atoms/Button/Button'
 import type { LoginRequest } from '../../../api/AuthApi'
@@ -56,6 +57,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 isLoading={isLoading}
                 disabled={!email || !password}
             />
+            <p className={styles.registerText}>
+                ¿No tienes cuenta?{' '}
+                <Link to="/registro" className={styles.registerLink}>Regístrate</Link>
+            </p>
         </form>
     )
 }
