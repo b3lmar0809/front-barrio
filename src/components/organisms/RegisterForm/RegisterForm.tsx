@@ -1,14 +1,24 @@
 ﻿/**
  * RegisterForm class
- * @Version: 1.0.0 - 06 may. 2026
+ * @Version: 1.1.0 - 10 may. 2026
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 06 may. 2026
  */
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import FormField from '../../molecules/FormField/FormField'
 import Button from '../../atoms/Button/Button'
 import type { RegisterRequest } from '../../../api/AuthApi'
 import styles from './RegisterForm.module.css'
+
+const formatRut = (value: string): string => {
+    const clean = value.replace(/[^0-9kK]/g, '').toUpperCase()
+    if (clean.length <= 1) return clean
+    const verifier = clean.slice(-1)
+    const body = clean.slice(0, -1)
+    const formatted = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    return `${formatted}-${verifier}`
+}
 
 interface RegisterFormProps {
     onSubmit: (data: RegisterRequest) => void
@@ -22,6 +32,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     error,
 }) => {
     const [name, setName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [companyName, setCompanyName] = useState('')
@@ -29,19 +40,27 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        onSubmit({ name, email, password, companyName, rut })
+        onSubmit({ name, lastName, email, password, companyName, rut })
     }
 
-    const isDisabled = !name || !email || !password || !companyName || !rut
+    const isDisabled = !name || !lastName || !email || !password || !companyName || !rut
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <FormField
-                label="Nombre completo"
+                label="Nombre"
                 name="name"
-                placeholder="Juan Perez"
+                placeholder="Juan"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
+            />
+            <FormField
+                label="Apellido"
+                name="lastName"
+                placeholder="Pérez"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
             />
             <FormField
@@ -75,7 +94,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 name="rut"
                 placeholder="12.345.678-9"
                 value={rut}
-                onChange={(e) => setRut(e.target.value)}
+                onChange={(e) => setRut(formatRut(e.target.value))}
                 required
             />
             {error && <p className={styles.error}>{error}</p>}
@@ -85,6 +104,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 isLoading={isLoading}
                 disabled={isDisabled}
             />
+            <p className={styles.loginText}>
+                ¿Ya tienes cuenta?{' '}
+                <Link to="/login" className={styles.loginLink}>Inicia sesión</Link>
+            </p>
         </form>
     )
 }
