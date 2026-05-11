@@ -1,0 +1,42 @@
+/**
+ * DashboardTemplate.module class
+ * @Version: 1.1.0 - 10 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 06 may. 2026
+ */
+
+/* ── Layout root ── */
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+}
+
+/* ── Main area ── */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* ── Content ── */
+.content {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* ── Mobile overlay ── */
+.overlay {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 30;
+    }
+}

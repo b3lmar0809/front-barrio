@@ -1,0 +1,34 @@
+/**
+ * LoginForm class
+ * @Version: 1.0.0 - 04 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 04 may. 2026
+ */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.error {
+    font-size: 0.875rem;
+    color: #ef4444;
+    margin: 0;
+}
+
+.registerText {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+    margin: 0;
+}
+
+.registerLink {
+    color: #4f46e5;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.registerLink:hover {
+    text-decoration: underline;
+}

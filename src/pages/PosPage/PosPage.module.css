@@ -1,0 +1,344 @@
+/**
+ * PosPage module
+ *
+ * @version 1.0.0 - 07 may. 2026
+ * @author Matias Belmar - mati.belmar0625@gmail.com
+ * @since 1.0.0 - 07 may. 2026
+ *
+ **/
+
+/* Layout principal: dos columnas 60/40 */
+.page {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+/* Columna izquierda */
+.left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Columna derecha */
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 1rem;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tab {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+    color: #1e293b;
+}
+
+/* Tab seleccionado */
+.tabActive {
+    color: #6366f1;
+    border-bottom-color: #6366f1;
+}
+
+/* Contenido de cada tab */
+.tabContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* ── Búsqueda por texto — lista de resultados ─────────────────────────────── */
+
+.resultList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Fila de resultado — clic para agregar al carrito */
+.resultItem {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s;
+}
+
+.resultItem:last-child {
+    border-bottom: none;
+}
+
+.resultItem:hover {
+    background: #eef2ff;
+}
+
+.resultName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.resultCode {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+}
+
+.resultPrice {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6366f1;
+}
+
+/* ── Cámara ───────────────────────────────────────────────────────────────── */
+
+/* Video que muestra el stream de la cámara */
+.video {
+    width: 100%;
+    border-radius: 0.5rem;
+    background: #0f172a;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* ── Pistola scanner ──────────────────────────────────────────────────────── */
+
+/* Input visible que recibe los datos de la pistola (auto-focus) */
+.scannerInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.875rem 1rem;
+    border: 2px dashed #6366f1;
+    border-radius: 0.5rem;
+    font-size: 1.125rem;
+    text-align: center;
+    color: #1e293b;
+    background: #f8faff;
+    transition: background 0.15s;
+}
+
+.scannerInput:focus {
+    outline: none;
+    background: #eef2ff;
+}
+
+/* ── Sección de pago ──────────────────────────────────────────────────────── */
+
+.payment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+}
+
+/* Botones EFECTIVO / TARJETA */
+.paymentMethods {
+    display: flex;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.methodBtn {
+    flex: 1;
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: #f8fafc;
+    color: #64748b;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.methodBtn:not(:last-child) {
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Método activo */
+.methodActive {
+    background: #6366f1;
+    color: #ffffff;
+}
+
+/* ── Efectivo ─────────────────────────────────────────────────────────────── */
+
+.cashSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cashLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+.cashInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    color: #1e293b;
+    background: #f8fafc;
+}
+
+.cashInput:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #ffffff;
+}
+
+/* Vuelto calculado en tiempo real */
+.change {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.625rem 0.75rem;
+    background: #f0fdf4;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+/* Vuelto negativo (monto insuficiente) */
+.changeNegative {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+/* ── Mensajes ─────────────────────────────────────────────────────────────── */
+
+.hint {
+    font-size: 0.875rem;
+    color: #64748b;
+    text-align: center;
+    margin: 0;
+}
+
+.error {
+    font-size: 0.875rem;
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+}
+
+.success {
+    font-size: 0.875rem;
+    color: #16a34a;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* ── Tabs móviles — alternan entre búsqueda y carrito ────────────────────── */
+
+/* Barra de tabs: oculta en desktop, visible solo en móvil */
+.mobileTabs {
+    display: none;
+}
+
+/* ── Responsive — móvil: una columna ─────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .page {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    /* Muestra la barra de tabs móviles */
+    .mobileTabs {
+        display: flex;
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1rem;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .mobileTab {
+        flex: 1;
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #64748b;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        cursor: pointer;
+        transition: color 0.15s, border-color 0.15s;
+    }
+
+    .mobileTab:hover {
+        color: #1e293b;
+    }
+
+    .mobileTabActive {
+        color: #6366f1;
+        border-bottom-color: #6366f1;
+    }
+
+    /* Panel oculto en móvil según tab activo */
+    .panelHidden {
+        display: none;
+    }
+
+    /* En móvil el carrito no es sticky */
+    .right {
+        position: static;
+    }
+}

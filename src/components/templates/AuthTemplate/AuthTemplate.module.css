@@ -1,0 +1,47 @@
+/**
+ * AuthTemplate class
+ * @Version: 1.0.0 - 06 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 06 may. 2026
+ */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #4f46e5;
+}
+
+.title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #6b7280;
+}
