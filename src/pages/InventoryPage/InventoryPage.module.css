@@ -1,0 +1,93 @@
+/**
+ * InventoryPage.module class
+ *
+ * @version 1.0.0 - 09 may. 2026
+ * @author Matias Belmar - mati.belmar0625@gmail.com
+ * @since 1.0.0 - 09 may. 2026
+ *
+ **/
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ── Secciones ──────────────────────────────────────────────────────────────── */
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.625rem;
+    padding: 1.25rem;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* ── Cabecera productos ─────────────────────────────────────────────────────── */
+
+.productsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.planLimit {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #92400e;
+    background: #fef9c3;
+    padding: 0.2rem 0.5rem;
+    border-radius: 9999px;
+}
+
+/* ── Estado ─────────────────────────────────────────────────────────────────── */
+
+.center {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.error {
+    font-size: 0.875rem;
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+}
+
+.empty {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-align: center;
+    padding: 2.5rem 0;
+    margin: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .productsHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
