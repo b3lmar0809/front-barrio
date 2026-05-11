@@ -4,3 +4,16 @@
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 03 may. 2026
  */
+.label {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #475569;
+    line-height: 1.25;
+}
+
+.required {
+    margin-left: 0.2rem;
+    color: #ef4444;
+    font-weight: 600;
+}

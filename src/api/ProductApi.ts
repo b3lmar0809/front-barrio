@@ -9,7 +9,7 @@ import api from './axiosConfig'
 export interface Product {
     id: number
     name:string
-    category: string
+    category: { id: number; name: string; userId: number }
     barcode: string
     boxPrice: number
     unitCost: number
@@ -23,7 +23,7 @@ export interface Product {
 export interface ProductRequest {
     name: string
     categoryId: number
-    barCode: string
+    barcode: string
     boxPrice: number
     unitsPerBox: number
     salePrice: number

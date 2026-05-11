@@ -15,3 +15,20 @@
     color: #ef4444;
     margin: 0;
 }
+
+.registerText {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+    margin: 0;
+}
+
+.registerLink {
+    color: #4f46e5;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.registerLink:hover {
+    text-decoration: underline;
+}
