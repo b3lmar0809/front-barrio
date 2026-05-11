@@ -1,0 +1,194 @@
+/**
+ * ProductForm.module class
+ * @Version: 1.0.0 - 10 may. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 10 may. 2026
+ */
+
+/* ── Overlay ── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem 2rem;
+    z-index: 50;
+    overflow-y: auto;
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modalTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.modalClose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 0.375rem;
+    background: transparent;
+    font-size: 1.5rem;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.modalClose:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* ── Form ── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+.input,
+.select {
+    padding: 0.5625rem 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: #1e293b;
+    background: #f8fafc;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.input:focus,
+.select:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #ffffff;
+}
+
+.row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+/* ── Preview ── */
+.preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    padding: 0.875rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+}
+
+.previewRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+.previewPositive {
+    color: #166534;
+    font-weight: 600;
+}
+
+.previewNegative {
+    color: #991b1b;
+    font-weight: 600;
+}
+
+.formError {
+    font-size: 0.875rem;
+    color: #ef4444;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.25rem;
+}
+
+/* ── Toggle IVA ── */
+.toggleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggleRow input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    accent-color: #6366f1;
+    cursor: pointer;
+}
+
+.toggleLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .row2 {
+        grid-template-columns: 1fr;
+    }
+
+    .overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .modal {
+        border-radius: 0.75rem 0.75rem 0 0;
+        max-width: 100%;
+    }
+}
