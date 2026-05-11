@@ -7,7 +7,7 @@
  *
  **/
 export const formatCLP = (amount: number): string =>
-    new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(amount)
+    new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(Math.round(amount))
 
 export const formatDate = (dateStr: string): string =>
     new Intl.DateTimeFormat('es-CL', { dateStyle: 'long' }).format(new Date(dateStr))

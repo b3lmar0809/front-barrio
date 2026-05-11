@@ -1,6 +1,6 @@
 /**
  * DashboardTemplate.module class
- * @Version: 1.0.0 - 06 may. 2026
+ * @Version: 1.1.0 - 10 may. 2026
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 06 may. 2026
  */
@@ -12,61 +12,6 @@
     background-color: #f3f4f6;
 }
 
-/* ── Sidebar ── */
-.sidebar {
-    width: 240px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    background-color: #1e1b4b;
-    padding: 1.5rem 1rem;
-    gap: 0.25rem;
-}
-
-.sidebarLogo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    margin-bottom: 2rem;
-    padding-left: 0.5rem;
-}
-
-.sidebarLogo span {
-    color: #818cf8;
-}
-
-/* ── Nav links ── */
-.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    flex: 1;
-}
-
-.navLink {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.625rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: #a5b4fc;
-    transition: background-color 0.15s, color 0.15s;
-}
-
-.navLink:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-}
-
-.navLinkActive {
-    background-color: #4f46e5;
-    color: #ffffff;
-}
-
-
 /* ── Main area ── */
 .main {
     flex: 1;
@@ -75,211 +20,23 @@
     min-width: 0;
 }
 
-/* ── Navbar ── */
-.navbar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    height: 60px;
-    padding: 0 1.5rem;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.menuBtn {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.375rem;
-    cursor: pointer;
-    color: #374151;
-    line-height: 1;
-}
-
-.navCompany {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #111827;
-    flex: 1;
-}
-
-.navActions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* ── Icon buttons (Bell, Settings) ── */
-.iconBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 0.5rem;
-    border: none;
-    background: none;
-    color: #6b7280;
-    cursor: pointer;
-    transition: background-color 0.15s, color 0.15s;
-}
-
-.iconBtn:hover,
-.iconBtnActive {
-    background-color: #f3f4f6;
-    color: #4f46e5;
-}
-
-/* ── Sidebar bottom (ajustes) ── */
-.sidebarBottom {
-    position: relative;
-    margin-top: auto;
-}
-
-.sidebarSettingsBtn {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    width: 100%;
-    padding: 0.625rem 0.75rem;
-    border-radius: 0.5rem;
-    border: none;
-    background: none;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: #a5b4fc;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 0.15s, color 0.15s;
-}
-
-.sidebarSettingsBtn:hover,
-.sidebarSettingsBtnActive {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-}
-
-/* ── Profile dropdown ── */
-.profileWrapper {
-    position: relative;
-}
-
-.dropdown {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    right: 0;
-    min-width: 220px;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.75rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    overflow: hidden;
-    z-index: 50;
-}
-
-.dropdownHeader {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-}
-
-.dropdownAvatar {
-    color: #9ca3af;
-    flex-shrink: 0;
-}
-
-.dropdownName {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: #111827;
-}
-
-.dropdownCompany {
-    font-size: 0.8125rem;
-    color: #6b7280;
-    margin-top: 0.125rem;
-}
-
-.dropdownDivider {
-    border: none;
-    border-top: 1px solid #f3f4f6;
-    margin: 0;
-}
-
-.dropdownItem {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: #374151;
-    transition: background-color 0.15s;
-}
-
-.dropdownItem:hover {
-    background-color: #f9fafb;
-}
-
-.dropdownItemDanger {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: none;
-    background: none;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: #ef4444;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 0.15s;
-}
-
-.dropdownItemDanger:hover {
-    background-color: #fef2f2;
-}
-
 /* ── Content ── */
 .content {
     flex: 1;
     padding: 1.5rem;
 }
 
-/* ── Mobile ── */
+/* ── Mobile overlay ── */
 .overlay {
     display: none;
 }
 
 @media (max-width: 768px) {
-    .sidebar {
-        position: fixed;
-        inset-y: 0;
-        left: 0;
-        z-index: 40;
-        transform: translateX(-100%);
-        transition: transform 0.25s ease;
-    }
-
-    .sidebarOpen {
-        transform: translateX(0);
-    }
-
     .overlay {
         display: block;
         position: fixed;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.4);
         z-index: 30;
-    }
-
-    .menuBtn {
-        display: block;
     }
 }
