@@ -9,7 +9,7 @@ import api from './axiosConfig'
 export interface Product {
     id: number
     name:string
-    category: { id: number; name: string; userId: number }
+    category: { id: number; name: string; userId: number } | null
     barcode: string
     boxPrice: number
     unitCost: number
