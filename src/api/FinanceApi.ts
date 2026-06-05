@@ -35,7 +35,7 @@ export const getFinances = async (userId: number): Promise<Finance[]> => {
 }
 
 export const getBalance = async (userId: number): Promise<Balance> => {
-  const res = await api.get<Balance>(`finance/balance/${userId}`)
+  const res = await api.get<Balance>(`/finance/balance/${userId}`)
   return res.data
 }
 
