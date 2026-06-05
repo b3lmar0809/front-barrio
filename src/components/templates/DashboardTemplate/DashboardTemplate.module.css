@@ -8,7 +8,8 @@
 /* ── Layout root ── */
 .layout {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     background-color: #f3f4f6;
 }
 
@@ -18,6 +19,8 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 /* ── Content ── */
