@@ -1,0 +1,32 @@
+/**
+ * PaymentPieChart.module
+ *
+ * @version 1.0.0 - 03 jun. 2026
+ * @author Matias Belmar - mati.belmar0625@gmail.com
+ * @since 1.0.0 - 03 jun. 2026
+ */
+
+.chart {
+    width: 100%;
+}
+
+.tooltip {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tooltipName {
+    margin: 0 0 0.125rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.tooltipValue {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: #64748b;
+}
