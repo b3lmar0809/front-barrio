@@ -1,0 +1,226 @@
+/**
+ *ReportsPage.module class
+ *
+ * @version 1.0.0 - 09 jun. 2026
+ * @author Matias Belmar - mati.belmar0625@gmail.com
+ * @since 1.0.0 - 09 jun. 2026
+ *
+ **/
+
+.page {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 0.9rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.empty {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+/* Top productos */
+.productItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+}
+
+.productItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.productHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #6366f1;
+    min-width: 1.75rem;
+}
+
+.productName {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #111827;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.productRevenue {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+}
+
+.productUnits {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0;
+}
+
+.barTrack {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    background: #6366f1;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+/* Stock bajo */
+.stockItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+}
+
+.stockItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.stockHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.stockName {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #111827;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stockInfo {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.stockOk {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* Reporte por período */
+.periodRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.monthInput {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    color: #111827;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.monthInput:focus {
+    border-color: #4f46e5;
+}
+
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+    }
+}
