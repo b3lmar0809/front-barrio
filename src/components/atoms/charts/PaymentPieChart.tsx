@@ -14,31 +14,26 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts'
+import type { PieLabelRenderProps } from 'recharts'
 import styles from './PaymentPieChart.module.css'
 
 const COLORS = ['#6366f1', '#10b981']
-const RADIAN = Math.PI / 180
 
 interface PaymentPieChartProps {
     data: { name: string; value: number }[]
 }
 
-interface LabelProps {
-    cx: number
-    cy: number
-    midAngle: number
-    innerRadius: number
-    outerRadius: number
-    percent: number
-}
-
-const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: LabelProps) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-    const x = cx + radius * Math.cos(-midAngle * RADIAN)
-    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+const renderLabel = (props: PieLabelRenderProps) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props
+    if (cx === undefined || cy === undefined || midAngle === undefined ||
+        innerRadius === undefined || outerRadius === undefined || percent === undefined) return null
+    const RADIAN = Math.PI / 180
+    const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.5
+    const x = Number(cx) + radius * Math.cos(-Number(midAngle) * RADIAN)
+    const y = Number(cy) + radius * Math.sin(-Number(midAngle) * RADIAN)
     return (
-        <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={13} fontWeight={600}>
-            {`${(percent * 100).toFixed(0)}%`}
+        <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={12}>
+            {`${(Number(percent) * 100).toFixed(0)}%`}
         </text>
     )
 }
