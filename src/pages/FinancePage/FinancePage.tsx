@@ -38,11 +38,20 @@ const FinancePage: React.FC = () => {
     const [loading,  setLoading]  = useState(true)
     const [error,    setError]    = useState<string | null>(null)
 
-    const [type,        setType]        = useState<'INCOME' | 'EXPENSE'>('INCOME')
-    const [amount,      setAmount]      = useState('')
-    const [description, setDescription] = useState('')
-    const [formError,   setFormError]   = useState<string | null>(null)
-    const [submitting,  setSubmitting]  = useState(false)
+    const [type,          setType]          = useState<'INCOME' | 'EXPENSE'>('INCOME')
+    const [amount,        setAmount]        = useState('')
+    const [displayAmount, setDisplayAmount] = useState('')
+    const [description,   setDescription]   = useState('')
+    const [formError,     setFormError]     = useState<string | null>(null)
+    const [submitting,    setSubmitting]    = useState(false)
+
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const raw = e.target.value.replace(/\./g, '')
+        if (raw === '' || /^\d+$/.test(raw)) {
+            setAmount(raw)
+            setDisplayAmount(raw === '' ? '' : new Intl.NumberFormat('es-CL').format(Number(raw)))
+        }
+    }
 
     const loadData = async () => {
         if (!userId) return
@@ -76,6 +85,7 @@ const FinancePage: React.FC = () => {
         try {
             await createFinance({ userId, type, amount: Number(amount), description })
             setAmount('')
+            setDisplayAmount('')
             setDescription('')
             await loadData()
         } catch {
@@ -109,7 +119,7 @@ const FinancePage: React.FC = () => {
                         <StatCard
                             variant="danger"
                             title="Gastos"
-                            value={formatCLP(balance?.totalExpense ?? 0)}
+                            value={formatCLP(balance?.totalExpenses ?? 0)}
                             subtitle={balance?.period}
                         />
                         <StatCard
@@ -140,10 +150,10 @@ const FinancePage: React.FC = () => {
                             <FormField
                                 label="Monto"
                                 name="amount"
-                                type="number"
-                                placeholder="Ej: 5000"
-                                value={amount}
-                                onChange={e => setAmount(e.target.value)}
+                                type="text"
+                                placeholder="Ej: 5.000"
+                                value={displayAmount}
+                                onChange={handleAmountChange}
                                 required
                             />
 
