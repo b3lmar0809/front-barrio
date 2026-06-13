@@ -43,6 +43,7 @@ const FinancePage: React.FC = () => {
     const [displayAmount, setDisplayAmount] = useState('')
     const [description,   setDescription]   = useState('')
     const [formError,     setFormError]     = useState<string | null>(null)
+    const [fieldErrors,   setFieldErrors]   = useState<{ amount?: string; description?: string }>({})
     const [submitting,    setSubmitting]    = useState(false)
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,10 +76,26 @@ const FinancePage: React.FC = () => {
     useEffect(() => { loadData() }, [userId])
 
     const handleSubmit = async () => {
-        if (!amount || !description) {
-            setFormError('Completa todos los campos.')
+        const newFieldErrors: typeof fieldErrors = {}
+
+        if (!amount) {
+            newFieldErrors.amount = 'El monto es obligatorio'
+        } else if (Number(amount) <= 0) {
+            newFieldErrors.amount = 'El monto debe ser mayor a 0'
+        }
+
+        if (!description.trim()) {
+            newFieldErrors.description = 'La descripción es obligatoria'
+        } else if (description.trim().length < 3) {
+            newFieldErrors.description = 'La descripción debe tener al menos 3 caracteres'
+        }
+
+        if (Object.keys(newFieldErrors).length > 0) {
+            setFieldErrors(newFieldErrors)
             return
         }
+
+        setFieldErrors({})
         if (!userId) return
         setFormError(null)
         setSubmitting(true)
@@ -155,6 +172,7 @@ const FinancePage: React.FC = () => {
                                 value={displayAmount}
                                 onChange={handleAmountChange}
                                 required
+                                error={fieldErrors.amount}
                             />
 
                             <FormField
@@ -165,6 +183,7 @@ const FinancePage: React.FC = () => {
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
                                 required
+                                error={fieldErrors.description}
                             />
 
                             {formError && <p className={styles.formError}>{formError}</p>}
