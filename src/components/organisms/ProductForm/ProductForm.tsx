@@ -144,8 +144,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, isLoading, error,
                             onChange={(e) => set('categoryId', Number(e.target.value))}
                         >
                             <option value="">Seleccionar categoría</option>
-                            {categories.map((c) => (
-                                <option key={c.id} value={c.id}>{c.name}</option>
+                            {categories.map((c, i) => (
+                                <option key={c?.id ?? i} value={c?.id ?? ''}>{c?.name ?? 'Sin categoría'}</option>
                             ))}
                         </select>
                         {errors.categoryId && <p className={styles.formError}>{errors.categoryId}</p>}
