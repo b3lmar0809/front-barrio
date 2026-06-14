@@ -55,13 +55,13 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({
                 {categories.length === 0 && (
                     <span className={styles.empty}>Sin categorías aún</span>
                 )}
-                {categories.map((cat) => (
-                    <span key={cat.id} className={styles.chip}>
-                        <Badge text={cat.name} variant="info" />
+                {categories.map((cat, i) => (
+                    <span key={cat?.id ?? i} className={styles.chip}>
+                        <Badge text={cat?.name ?? 'Sin nombre'} variant="info" />
                         <button
                             className={styles.chipRemove}
                             onClick={() => onDelete(cat.id)}
-                            aria-label={`Eliminar ${cat.name}`}
+                            aria-label={`Eliminar ${cat?.name ?? 'categoría'}`}
                         >
                             ×
                         </button>
