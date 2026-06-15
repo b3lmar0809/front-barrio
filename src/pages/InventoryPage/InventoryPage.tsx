@@ -51,8 +51,6 @@ const InventoryPage: React.FC = () => {
                     getProducts(userId),
                     getCategory(userId),
                 ])
-                console.log('[InventoryPage] raw products:', prods)
-                console.log('[InventoryPage] raw categories:', cats)
                 setProducts(prods)
                 setCategories(cats)
             } catch {
