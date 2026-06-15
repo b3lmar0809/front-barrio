@@ -8,7 +8,6 @@
  **/
 import { useState, useCallback, useRef } from 'react'
 import { BrowserMultiFormatReader } from '@zxing/browser'
-import { NotFoundException } from '@zxing/library'
 
 interface UseBarcodeScannerOptions {
     onScan: (barcode: string) => void
@@ -45,7 +44,7 @@ export const useBarcodeScanner = ({ onScan }: UseBarcodeScannerOptions): UseBarc
                         // se leyo un codigo exitosamente → se lo pasa al componente padre
                         onScan(result.getText())
                     }
-                    if (error && !(error instanceof NotFoundException)) {
+                    if (error && error.name !== 'NotFoundException') {
                         // NotFoundException ocurre en cada frame sin codigo, es normal y se ignora
                         // cualquier otro error sí se loguea
                         console.error('Scanner error:', error)

@@ -66,7 +66,7 @@ const InventoryPage: React.FC = () => {
         .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
         .map(({ id, name, category, barcode, salePrice, unitCost, stock, minStock }) => ({
             id, name, barcode, salePrice, unitCost, stock, minStock,
-            category: category.name,
+            category: category?.name ?? 'Sin categoría',
         }))
 
     const handleAddCategory = async () => {

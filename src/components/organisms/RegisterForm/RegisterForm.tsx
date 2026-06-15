@@ -31,15 +31,57 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     isLoading = false,
     error,
 }) => {
-    const [name, setName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [name,        setName]        = useState('')
+    const [lastName,    setLastName]    = useState('')
+    const [email,       setEmail]       = useState('')
+    const [password,    setPassword]    = useState('')
     const [companyName, setCompanyName] = useState('')
-    const [rut, setRut] = useState('')
+    const [rut,         setRut]         = useState('')
+    const [errors,      setErrors]      = useState<{
+        name?: string
+        email?: string
+        password?: string
+        companyName?: string
+    }>({})
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        const newErrors: { name?: string; email?: string; password?: string; companyName?: string } = {}
+
+        if (!name.trim()) {
+            newErrors.name = 'El nombre es obligatorio'
+        } else if (name.trim().length < 3) {
+            newErrors.name = 'El nombre debe tener al menos 3 caracteres'
+        } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(name.trim())) {
+            newErrors.name = 'El nombre solo puede contener letras y espacios'
+        }
+
+        if (!email.trim()) {
+            newErrors.email = 'El email es obligatorio'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            newErrors.email = 'Ingresa un email válido'
+        }
+
+        if (!password) {
+            newErrors.password = 'La contraseña es obligatoria'
+        } else if (password.length < 8) {
+            newErrors.password = 'La contraseña debe tener al menos 8 caracteres'
+        } else if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+            newErrors.password = 'La contraseña debe contener al menos una letra y un número'
+        }
+
+        if (!companyName.trim()) {
+            newErrors.companyName = 'El nombre de la empresa es obligatorio'
+        } else if (companyName.trim().length < 3) {
+            newErrors.companyName = 'El nombre de la empresa debe tener al menos 3 caracteres'
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
         onSubmit({ name, lastName, email, password, companyName, rut })
     }
 
@@ -54,6 +96,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                error={errors.name}
             />
             <FormField
                 label="Apellido"
@@ -71,6 +114,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                error={errors.email}
             />
             <FormField
                 label="Contraseña"
@@ -80,6 +124,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                error={errors.password}
             />
             <FormField
                 label="Nombre de la empresa"
@@ -88,6 +133,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 required
+                error={errors.companyName}
             />
             <FormField
                 label="RUT"

@@ -43,7 +43,7 @@ export const getTopProducts = async (userId: number, period: string): Promise<Pr
 }
 
 export const getSaleReport = async (userId: number, period: string): Promise<SaleReport> => {
-  const res = await api.get<SaleReport>(`/reports/${userId}?period=${period}`)
+    const res = await api.get<SaleReport>(`/reports/${userId}/sales?period=${period}`)
   return res.data  
 }
 

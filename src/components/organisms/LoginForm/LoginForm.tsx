@@ -22,11 +22,32 @@ const LoginForm: React.FC<LoginFormProps> = ({
     isLoading = false,
     error,
 }) => {
-    const [email, setEmail] = useState('')
+    const [email,    setEmail]    = useState('')
     const [password, setPassword] = useState('')
+    const [errors,   setErrors]   = useState<{ email?: string; password?: string }>({})
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        const newErrors: { email?: string; password?: string } = {}
+
+        if (!email.trim()) {
+            newErrors.email = 'El email es obligatorio'
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            newErrors.email = 'Ingresa un email válido'
+        }
+
+        if (!password) {
+            newErrors.password = 'La contraseña es obligatoria'
+        } else if (password.length < 8) {
+            newErrors.password = 'La contraseña debe tener al menos 8 caracteres'
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
         onSubmit({ email, password })
     }
 
@@ -40,6 +61,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                error={errors.email}
             />
             <FormField
                 label="Contraseña"
@@ -49,6 +71,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                error={errors.password}
             />
             {error && <p className={styles.error}>{error}</p>}
             <Button
