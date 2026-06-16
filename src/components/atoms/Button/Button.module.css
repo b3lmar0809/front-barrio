@@ -75,6 +75,23 @@
     background: #fee2e2;
 }
 
+/* green */
+.green {
+    background: #0F6E56;
+    border-color: #0F6E56;
+    color: #ffffff;
+}
+
+.green:hover:not(:disabled) {
+    background: #0a5a45;
+    border-color: #0a5a45;
+}
+
+.green:active:not(:disabled) {
+    background: #084838;
+    border-color: #084838;
+}
+
 /* spinner */
 .spinner {
     display: inline-block;
