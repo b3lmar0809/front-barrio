@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
     }
 
     return (
-        <AuthTemplate title="Iniciar sesion">
+        <AuthTemplate variant="split">
             <LoginForm
                 onSubmit={handleSubmit}
                 isLoading={isLoading}
