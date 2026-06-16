@@ -45,3 +45,91 @@
     font-weight: 500;
     color: #6b7280;
 }
+
+/* ── Split layout ────────────────────────────────────── */
+
+.splitPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f4f2;
+    padding: 1.5rem;
+}
+
+.splitWrapper {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    min-height: 520px;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.leftPanel {
+    flex: 0 0 42%;
+    background: #0F6E56;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 2.75rem;
+    gap: 1.75rem;
+}
+
+.splitLogo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.splitLogo span {
+    color: #9FE1CB;
+}
+
+.slogan {
+    font-size: 0.8125rem;
+    color: #9FE1CB;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+.rightPanel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 2.5rem 2rem;
+}
+
+@media (max-width: 768px) {
+    .splitPage {
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .splitWrapper {
+        flex-direction: column;
+        min-height: unset;
+        border-radius: 1rem;
+    }
+
+    .leftPanel {
+        flex: none;
+        padding: 1.75rem 1.5rem;
+        gap: 1.25rem;
+    }
+
+    .rightPanel {
+        padding: 2rem 1.5rem;
+    }
+}
