@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FormField from '../../molecules/FormField/FormField'
 import Button from '../../atoms/Button/Button'
-import { Mail, Lock } from 'lucide-react'
+import { Mail, Lock, User, Briefcase, FileText } from 'lucide-react'
 import type { RegisterRequest } from '../../../api/AuthApi'
 import styles from './RegisterForm.module.css'
 
@@ -105,6 +105,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     onChange={(e) => setName(e.target.value)}
                     required
                     error={errors.name}
+                    icon={<User size={18} color="#94A3B8" />}
                 />
                 <FormField
                     label="Apellido"
@@ -113,6 +114,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
+                    icon={<User size={18} color="#94A3B8" />}
                 />
             </div>
 
@@ -125,7 +127,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 error={errors.email}
-                icon={<Mail size={16} color="#9ca3af" />}
+                icon={<Mail size={18} color="#94A3B8" />}
             />
 
             <FormField
@@ -137,7 +139,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 error={errors.password}
-                icon={<Lock size={16} color="#9ca3af" />}
+                icon={<Lock size={18} color="#94A3B8" />}
                 onTogglePassword={() => setShowPassword((p) => !p)}
                 showPassword={showPassword}
             />
@@ -151,6 +153,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     onChange={(e) => setCompanyName(e.target.value)}
                     required
                     error={errors.companyName}
+                    icon={<Briefcase size={18} color="#94A3B8" />}
                 />
                 <FormField
                     label="RUT"
@@ -160,6 +163,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     onChange={(e) => setRut(formatRut(e.target.value))}
                     required
                     maxLength={12}
+                    icon={<FileText size={18} color="#94A3B8" />}
                 />
             </div>
 

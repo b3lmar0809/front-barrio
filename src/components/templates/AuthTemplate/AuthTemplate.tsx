@@ -6,7 +6,7 @@
  */
 import React from 'react'
 import BenefitItem from '../../atoms/BenefitItem/BenefitItem'
-import { PosIcon, InventoryIcon, ReportsIcon } from '../../atoms/icon/Icon'
+import { Zap, Package, BarChart2 } from 'lucide-react'
 import styles from './AuthTemplate.module.css'
 
 interface BenefitConfig {
@@ -25,9 +25,9 @@ interface AuthTemplateProps {
 const defaultSlogan = 'Gestiona tu almacén de barrio desde un solo lugar.'
 
 const defaultBenefits: BenefitConfig[] = [
-    { icon: <PosIcon size={18} color="#9FE1CB" />, text: 'Punto de venta rápido' },
-    { icon: <InventoryIcon size={18} color="#9FE1CB" />, text: 'Control de inventario' },
-    { icon: <ReportsIcon size={18} color="#9FE1CB" />, text: 'Reportes y finanzas' },
+    { icon: <Zap size={18} color="#9FE1CB" />, text: 'Punto de venta rápido' },
+    { icon: <Package size={18} color="#9FE1CB" />, text: 'Control de inventario' },
+    { icon: <BarChart2 size={18} color="#9FE1CB" />, text: 'Reportes y finanzas' },
 ]
 
 const AuthTemplate: React.FC<AuthTemplateProps> = ({

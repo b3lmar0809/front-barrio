@@ -68,7 +68,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 error={errors.email}
-                icon={<Mail size={16} color="#9ca3af" />}
+                icon={<Mail size={18} color="#94A3B8" />}
             />
             <FormField
                 label="Contraseña"
@@ -79,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 error={errors.password}
-                icon={<Lock size={16} color="#9ca3af" />}
+                icon={<Lock size={18} color="#94A3B8" />}
                 onTogglePassword={() => setShowPassword((p) => !p)}
                 showPassword={showPassword}
             />
