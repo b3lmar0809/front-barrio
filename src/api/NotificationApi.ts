@@ -15,13 +15,13 @@ export interface Notification {
 }
 
 export const getNotifications = async (userId: number): Promise<Notification[]> => {
-  const res = await api.get<Notification[]>(`/notifications/${userId}`)
+  const res = await api.get<Notification[]>(`/notification/${userId}`)
   return res.data
 }
 
 export const getUnreadCount = async (userId: number): Promise<number> => {
-    const res = await api.get<{ unread: number }>(`/notification/${userId}/unread`)
-    return res.data.unread
+    const res = await api.get<number>(`/notification/${userId}/unread`)
+    return res.data
 }
 
 export const markAsRead = async (id: number): Promise<void> => {
