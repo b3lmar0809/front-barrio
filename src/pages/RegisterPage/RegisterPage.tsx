@@ -10,10 +10,17 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthTemplate from '../../components/templates/AuthTemplate/AuthTemplate'
 import RegisterForm from '../../components/organisms/RegisterForm/RegisterForm'
+import { Rocket, Smartphone, Gift } from 'lucide-react'
 import { registerUser } from '../../api/AuthApi'
 import type { RegisterRequest } from '../../api/AuthApi'
 import { setUser } from '../../app/Store'
 import { useAppDispatch } from '../../app/hooks'
+
+const registerBenefits = [
+    { icon: <Rocket size={18} color="#9FE1CB" />, text: 'Configúralo en minutos' },
+    { icon: <Smartphone size={18} color="#9FE1CB" />, text: 'Desde tu celular o computador' },
+    { icon: <Gift size={18} color="#9FE1CB" />, text: 'Plan gratis para empezar' },
+]
 
 const RegisterPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -38,7 +45,11 @@ const RegisterPage: React.FC = () => {
     }
 
     return (
-        <AuthTemplate title="Crear cuenta">
+        <AuthTemplate
+            variant="split"
+            slogan="Crea tu cuenta y empieza a digitalizar tu almacén hoy."
+            benefits={registerBenefits}
+        >
             <RegisterForm
                 onSubmit={handleSubmit}
                 isLoading={isLoading}

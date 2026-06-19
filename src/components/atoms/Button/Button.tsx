@@ -10,10 +10,11 @@ import styles from './Button.module.css'
 interface ButtonProps {
     label: string
     onClick?: () => void
-    variant?: 'primary' | 'secondary' | 'danger'
+    variant?: 'primary' | 'secondary' | 'danger' | 'green'
     disabled?: boolean
     isLoading?: boolean
     type?: 'button' | 'submit' | 'reset'
+    className?: string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,10 +24,11 @@ const Button: React.FC<ButtonProps> = ({
     disabled = false,
     isLoading = false,
     type = 'button',
+    className,
 }) => {
     return (
         <button
-            className={`${styles.btn} ${styles[variant]}`}
+            className={`${styles.btn} ${styles[variant]}${className ? ` ${className}` : ''}`}
             onClick={onClick}
             disabled={disabled || isLoading}
             type={type}

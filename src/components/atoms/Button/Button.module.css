@@ -75,6 +75,32 @@
     background: #fee2e2;
 }
 
+/* green */
+.green {
+    background: #059669;
+    border-color: #059669;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.15s;
+}
+
+.green:hover:not(:disabled) {
+    background: #047857;
+    border-color: #047857;
+    transform: translateY(-1px);
+}
+
+.green:active:not(:disabled) {
+    background: #065f46;
+    border-color: #065f46;
+    transform: translateY(0);
+}
+
+.green:focus-visible {
+    outline: 2px solid #059669;
+    outline-offset: 2px;
+}
+
 /* spinner */
 .spinner {
     display: inline-block;

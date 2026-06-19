@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FormField from '../../molecules/FormField/FormField'
 import Button from '../../atoms/Button/Button'
+import { Mail, Lock } from 'lucide-react'
 import type { LoginRequest } from '../../../api/AuthApi'
 import styles from './LoginForm.module.css'
 
@@ -22,9 +23,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
     isLoading = false,
     error,
 }) => {
-    const [email,    setEmail]    = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [errors,   setErrors]   = useState<{ email?: string; password?: string }>({})
+    const [showPassword, setShowPassword] = useState(false)
+    const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -53,6 +55,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.formHeader}>
+                <h1 className={styles.formTitle}>Iniciar sesión</h1>
+                <p className={styles.formSubtitle}>Bienvenido de vuelta</p>
+            </div>
             <FormField
                 label="Email"
                 name="email"
@@ -62,6 +68,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 error={errors.email}
+                icon={<Mail size={18} color="#94A3B8" />}
             />
             <FormField
                 label="Contraseña"
@@ -72,13 +79,18 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 error={errors.password}
+                icon={<Lock size={18} color="#94A3B8" />}
+                onTogglePassword={() => setShowPassword((p) => !p)}
+                showPassword={showPassword}
             />
             {error && <p className={styles.error}>{error}</p>}
             <Button
                 label="Iniciar sesión"
                 type="submit"
+                variant="green"
                 isLoading={isLoading}
                 disabled={!email || !password}
+                className={styles.submitBtn}
             />
             <p className={styles.registerText}>
                 ¿No tienes cuenta?{' '}

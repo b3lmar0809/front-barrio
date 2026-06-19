@@ -17,6 +17,10 @@ interface FormFieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     error?: string
     required?: boolean
+    icon?: React.ReactNode
+    onTogglePassword?: () => void
+    showPassword?: boolean
+    maxLength?: number
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -28,6 +32,10 @@ const FormField: React.FC<FormFieldProps> = ({
     onChange,
     error,
     required = false,
+    icon,
+    onTogglePassword,
+    showPassword,
+    maxLength,
 }) => {
     return (
         <div>
@@ -40,6 +48,10 @@ const FormField: React.FC<FormFieldProps> = ({
                 value={value}
                 onChange={onChange}
                 error={error}
+                icon={icon}
+                onTogglePassword={onTogglePassword}
+                showPassword={showPassword}
+                maxLength={maxLength}
             />
         </div>
     )

@@ -4,3 +4,108 @@
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 03 may. 2026
  */
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 6px;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    position: absolute;
+    left: 0.75rem;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    color: #94A3B8;
+    z-index: 1;
+}
+
+.input {
+    width: 100%;
+    height: 46px;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #1E293B;
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.input::placeholder {
+    color: #94A3B8;
+}
+
+.input:focus {
+    border-color: #059669;
+    box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+}
+
+.input:disabled {
+    background: #f9fafb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.inputWithIcon {
+    padding-left: 2.75rem;
+}
+
+.inputWithToggle {
+    padding-right: 2.75rem;
+}
+
+.inputError {
+    border-color: #EF4444;
+}
+
+.inputError:focus {
+    border-color: #EF4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.toggleBtn {
+    position: absolute;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: #94A3B8;
+    border-radius: 0.25rem;
+    transition: color 0.15s;
+}
+
+.toggleBtn:hover {
+    color: #64748B;
+}
+
+.errorMsg {
+    font-size: 0.75rem;
+    color: #EF4444;
+    margin: 0;
+}
+
+/* Oculta el botón nativo de revelar contraseña de Edge/Chrome */
+.input::-ms-reveal,
+.input::-ms-clear {
+    display: none;
+}
+
+.input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+}
