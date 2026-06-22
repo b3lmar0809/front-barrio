@@ -1,0 +1,24 @@
+/**
+ * KPICardSkeleton class
+ * @Version: 1.0.0 - 18 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 18 jun. 2026
+ */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    min-height: 140px;
+    border-radius: 16px;
+    border: 1px solid #E2E8F0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

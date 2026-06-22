@@ -10,12 +10,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getDashboard, getTopProducts } from '../../api/ReportApi'
 import type { Dashboard, ProductStats } from '../../api/ReportApi'
-import { formatCLP, formatDate } from '../../utils/formatters'
+import { formatCLP, formatMonthYear } from '../../utils/formatters'
 import { useAppSelector } from '../../app/hooks'
+import { Wallet, Receipt, TrendingUp, AlertTriangle, ShoppingCart, Package, BarChart3 } from 'lucide-react'
 import StatCard from '../../components/molecules/StatCard/StatCard'
 import TopProductsTable from '../../components/organisms/TopProductsTable/TopProductsTable'
-import Spinner from '../../components/atoms/Spinner/Spinner'
-import Button from '../../components/atoms/Button/Button'
+import KPICardSkeleton from '../../components/molecules/KPICardSkeleton/KPICardSkeleton'
+import ProductListSkeleton from '../../components/molecules/ProductListSkeleton/ProductListSkeleton'
+import QuickAccessSkeleton from '../../components/molecules/QuickAccessSkeleton/QuickAccessSkeleton'
 import styles from './DashboardPage.module.css'
 
 const DashboardPage: React.FC = () => {
@@ -50,78 +52,108 @@ const DashboardPage: React.FC = () => {
 
     return (
         <div className={styles.page}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>Dashboard</h1>
-                <p className={styles.subtitle}>
-                    {formatDate(new Date().toISOString())}
-                </p>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Dashboard</h1>
             </div>
 
             {loading && (
-                <div className={styles.center}>
-                    <Spinner size="lg" />
-                </div>
+                <>
+                    <section className={styles.statsGrid} aria-label="Métricas del mes">
+                        <KPICardSkeleton />
+                        <KPICardSkeleton />
+                        <KPICardSkeleton />
+                        <KPICardSkeleton />
+                    </section>
+
+                    <div className={styles.bottomGrid}>
+                        <section className={styles.card}>
+                            <h2 className={styles.sectionTitle}>Productos más vendidos</h2>
+                            <ProductListSkeleton rows={5} />
+                        </section>
+
+                        <section className={styles.card}>
+                            <h2 className={styles.sectionTitle}>Accesos rápidos</h2>
+                            <QuickAccessSkeleton />
+                        </section>
+                    </div>
+                </>
             )}
 
             {error && <p className={styles.error}>{error}</p>}
 
             {!loading && !error && dashboard && (
                 <>
-                    {/* Sección 1 — StatCards */}
-                    <section className={styles.statsGrid}>
+                    <section className={styles.statsGrid} aria-label="Métricas del mes">
                         <StatCard
                             title="Total vendido"
                             value={formatCLP(dashboard.totalSoldMonth)}
-                            subtitle={dashboard.currentPeriod}
-                            variant="success"
+                            Icon={Wallet}
+                            iconBg="#ECFDF5"
+                            iconColor="#059669"
+                            period={formatMonthYear(dashboard.currentPeriod)}
                         />
                         <StatCard
                             title="IVA del mes"
                             value={formatCLP(dashboard.totalIvaMonth)}
-                            subtitle={dashboard.currentPeriod}
-                            variant="info"
+                            Icon={Receipt}
+                            iconBg="#EEF2FF"
+                            iconColor="#4F46E5"
+                            period={formatMonthYear(dashboard.currentPeriod)}
                         />
                         <StatCard
                             title="Ganancia neta"
                             value={formatCLP(dashboard.totalProfitMonth)}
-                            subtitle={dashboard.currentPeriod}
-                            variant="success"
+                            Icon={TrendingUp}
+                            iconBg="#F0FDFA"
+                            iconColor="#0D9488"
+                            period={formatMonthYear(dashboard.currentPeriod)}
                         />
                         <StatCard
                             title="Stock bajo"
                             value={dashboard.lowStockCount}
-                            subtitle="productos"
-                            variant={dashboard.lowStockCount > 0 ? 'danger' : 'warning'}
+                            Icon={AlertTriangle}
+                            iconBg="#FEF3C7"
+                            iconColor="#D97706"
+                            suffix="productos"
                         />
                     </section>
 
-                    {/* Sección 2 — Top productos */}
-                    <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Productos más vendidos este mes</h2>
-                        <TopProductsTable products={topProducts} />
-                    </section>
+                    <div className={styles.bottomGrid}>
+                        <section className={styles.card}>
+                            <h2 className={styles.sectionTitle}>Productos más vendidos</h2>
+                            <TopProductsTable products={topProducts} />
+                        </section>
 
-                    {/* Sección 3 — Accesos rápidos */}
-                    <section className={styles.section}>
-                        <h2 className={styles.sectionTitle}>Accesos rápidos</h2>
-                        <div className={styles.quickAccess}>
-                            <Button
-                                label="Ir al POS"
-                                variant="primary"
-                                onClick={() => navigate('/pos')}
-                            />
-                            <Button
-                                label="Ver inventario"
-                                variant="secondary"
-                                onClick={() => navigate('/inventario')}
-                            />
-                            <Button
-                                label="Ver reportes"
-                                variant="secondary"
-                                onClick={() => navigate('/reportes')}
-                            />
-                        </div>
-                    </section>
+                        <section className={styles.card}>
+                            <h2 className={styles.sectionTitle}>Accesos rápidos</h2>
+                            <div className={styles.quickAccess}>
+                                <button
+                                    className={`${styles.qaBtn} ${styles.qaBtnPrimary}`}
+                                    onClick={() => navigate('/pos')}
+                                    aria-label="Ir al Punto de Venta"
+                                >
+                                    <ShoppingCart size={16} />
+                                    <span>Ir al Punto de Venta</span>
+                                </button>
+                                <button
+                                    className={styles.qaBtn}
+                                    onClick={() => navigate('/inventario')}
+                                    aria-label="Ver inventario"
+                                >
+                                    <Package size={16} color="#059669" />
+                                    <span>Ver inventario</span>
+                                </button>
+                                <button
+                                    className={styles.qaBtn}
+                                    onClick={() => navigate('/reportes')}
+                                    aria-label="Ver reportes"
+                                >
+                                    <BarChart3 size={16} color="#059669" />
+                                    <span>Ver reportes</span>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
                 </>
             )}
         </div>
