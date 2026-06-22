@@ -16,7 +16,7 @@ interface StatCardProps {
     iconColor?: string
     period?: string
     suffix?: string
-    variant?: 'success' | 'danger' | 'info' | 'neutral'
+    variant?: 'success' | 'danger' | 'info' | 'neutral' | 'warning'
     subtitle?: string
 }
 

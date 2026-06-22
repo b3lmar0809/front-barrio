@@ -64,3 +64,4 @@
 .danger  .value { color: #DC2626; }
 .info    .value { color: #4F46E5; }
 .neutral .value { color: #0F172A; }
+.warning .value { color: #D97706; }
