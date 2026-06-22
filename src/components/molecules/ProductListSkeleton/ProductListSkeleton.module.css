@@ -1,0 +1,21 @@
+/**
+ * ProductListSkeleton class
+ * @Version: 1.0.0 - 18 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 18 jun. 2026
+ */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.row > :last-child {
+    margin-left: auto;
+}
