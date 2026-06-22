@@ -58,3 +58,9 @@
     color: #94A3B8;
     margin: 8px 0 0;
 }
+
+/* variant modes */
+.success .value { color: #059669; }
+.danger  .value { color: #DC2626; }
+.info    .value { color: #4F46E5; }
+.neutral .value { color: #0F172A; }
