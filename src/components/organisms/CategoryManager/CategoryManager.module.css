@@ -6,82 +6,103 @@
  */
 
 .section {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.01);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.left {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.625rem;
-    padding: 1.25rem;
 }
 
-.title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0;
+.listTitle {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748B;
+    margin-bottom: 12px;
 }
 
-.list {
+.chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    min-height: 2rem;
+    gap: 8px;
 }
 
 .chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 8px;
+    padding: 6px 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
 }
 
 .chipRemove {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
     padding: 0;
     border: none;
-    border-radius: 50%;
-    background: #e2e8f0;
-    color: #64748b;
-    font-size: 1rem;
-    line-height: 1;
+    background: transparent;
+    color: #94A3B8;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    line-height: 0;
+    transition: color 0.2s;
 }
 
 .chipRemove:hover {
-    background: #fecaca;
-    color: #dc2626;
+    color: #EF4444;
 }
 
-.add {
-    display: flex;
-    gap: 0.5rem;
+.addBtn {
+    flex-shrink: 0;
+    display: inline-flex;
     align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px;
+    background: #059669;
+    border: 1px solid #059669;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
 }
 
-.input {
-    flex: 1;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    color: #1e293b;
-    background: #f8fafc;
-    transition: border-color 0.15s, background 0.15s;
-}
-
-.input:focus {
-    outline: none;
-    border-color: #6366f1;
-    background: #ffffff;
+.addBtn:hover {
+    background: #047857;
+    border-color: #047857;
 }
 
 .empty {
     font-size: 0.875rem;
     color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+    .header {
+        flex-direction: column;
+        gap: 16px;
+    }
 }

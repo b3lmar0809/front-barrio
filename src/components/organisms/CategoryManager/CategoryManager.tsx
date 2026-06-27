@@ -4,87 +4,63 @@
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 10 may. 2026
  */
-import React, { useState } from 'react'
+import React from 'react'
+import { X, Plus } from 'lucide-react'
 import type { Category } from '../../../api/CategoryApi'
-import Badge from '../../atoms/Badge/Badge'
-import Button from '../../atoms/Button/Button'
+import { capitalize } from '../../../utils/formatters'
+import CategoryChipsSkeleton from '../../molecules/CategoryChipsSkeleton/CategoryChipsSkeleton'
 import styles from './CategoryManager.module.css'
 
 interface CategoryManagerProps {
     categories: Category[]
-    newName: string
-    isAdding: boolean
-    onNameChange: (name: string) => void
-    onAdd: () => void
+    onOpenModal: () => void
     onDelete: (id: number) => void
+    loading?: boolean
 }
 
 const CategoryManager: React.FC<CategoryManagerProps> = ({
     categories,
-    newName,
-    isAdding,
-    onNameChange,
-    onAdd,
+    onOpenModal,
     onDelete,
+    loading = false,
 }) => {
-    const [catError, setCatError] = useState<string | null>(null)
-
-    const handleAdd = () => {
-        const trimmed = newName.trim()
-        if (!trimmed) {
-            setCatError('El nombre es obligatorio')
-            return
-        }
-        if (trimmed.length < 2) {
-            setCatError('El nombre debe tener al menos 2 caracteres')
-            return
-        }
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(trimmed)) {
-            setCatError('Solo se permiten letras y espacios')
-            return
-        }
-        setCatError(null)
-        onAdd()
-    }
-
     return (
         <section className={styles.section}>
-            <h2 className={styles.title}>Categorías</h2>
+            <div className={styles.header}>
 
-            <div className={styles.list}>
-                {categories.length === 0 && (
-                    <span className={styles.empty}>Sin categorías aún</span>
-                )}
-                {categories.map((cat, i) => (
-                    <span key={cat?.id ?? i} className={styles.chip}>
-                        <Badge text={cat?.name ?? 'Sin nombre'} variant="info" />
-                        <button
-                            className={styles.chipRemove}
-                            onClick={() => onDelete(cat.id)}
-                            aria-label={`Eliminar ${cat?.name ?? 'categoría'}`}
-                        >
-                            ×
-                        </button>
+                <div className={styles.left}>
+                    <span className={styles.listTitle}>
+                        {loading
+                            ? 'Categorías registradas'
+                            : `Categorías registradas (${categories.length})`
+                        }
                     </span>
-                ))}
-            </div>
+                    <div className={styles.chips}>
+                        {loading && <CategoryChipsSkeleton />}
+                        {!loading && categories.length === 0 && (
+                            <span className={styles.empty}>Sin categorías aún</span>
+                        )}
+                        {!loading && categories.map((cat, i) => (
+                            <span key={cat?.id ?? i} className={styles.chip}>
+                                {capitalize(cat?.name ?? 'Sin nombre')}
+                                <button
+                                    className={styles.chipRemove}
+                                    onClick={() => onDelete(cat.id)}
+                                    aria-label={`Eliminar ${cat?.name ?? 'categoría'}`}
+                                >
+                                    <X size={12} />
+                                </button>
+                            </span>
+                        ))}
+                    </div>
+                </div>
 
-            <div className={styles.add}>
-                <input
-                    className={styles.input}
-                    placeholder="Nueva categoría..."
-                    value={newName}
-                    onChange={(e) => { onNameChange(e.target.value); setCatError(null) }}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
-                />
-                <Button
-                    label="Agregar"
-                    onClick={handleAdd}
-                    disabled={isAdding}
-                    isLoading={isAdding}
-                />
+                <button className={styles.addBtn} onClick={onOpenModal}>
+                    <Plus size={15} />
+                    Nueva categoría
+                </button>
+
             </div>
-            {catError && <p style={{ color: '#dc2626', fontSize: '0.8rem', margin: '0.25rem 0 0 0' }}>{catError}</p>}
         </section>
     )
 }
