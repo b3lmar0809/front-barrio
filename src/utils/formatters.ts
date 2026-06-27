@@ -9,6 +9,17 @@
 export const formatCLP = (amount: number): string =>
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(Math.round(amount))
 
+// Formato de separador de miles para inputs (sin símbolo $): 1500 → "1.500"
+export const formatInputCLP = (raw: string | number): string => {
+    const digits = String(raw).replace(/\D/g, '')
+    if (!digits) return ''
+    return new Intl.NumberFormat('es-CL').format(Number(digits))
+}
+
+// Quita el formato de miles y devuelve solo dígitos: "1.500" → "1500"
+export const parseCLP = (formatted: string): string =>
+    formatted.replace(/\D/g, '')
+
 export const formatDate = (dateStr: string): string =>
     new Intl.DateTimeFormat('es-CL', { dateStyle: 'long' }).format(new Date(dateStr))
 
