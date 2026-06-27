@@ -6,10 +6,32 @@
  */
 .container {
     display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 8px;
+    max-width: 360px;
 }
 
 .inputWrapper {
     flex: 1;
+}
+
+.inputWrapper input {
+    height: 40px;
+    width: 100%;
+    padding: 0 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    color: #334155;
+    background: #F8FAFC;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.inputWrapper input:focus {
+    outline: none;
+    border-color: #059669;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+    background: #ffffff;
 }
