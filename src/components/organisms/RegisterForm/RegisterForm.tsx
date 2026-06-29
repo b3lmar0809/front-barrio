@@ -39,6 +39,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     const [showPassword, setShowPassword] = useState(false)
     const [companyName,  setCompanyName]  = useState('')
     const [rut,          setRut]          = useState('')
+    const [declaresIva,  setDeclaresIva]  = useState(false)
     const [errors,       setErrors]       = useState<{
         name?: string
         email?: string
@@ -84,7 +85,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         }
 
         setErrors({})
-        onSubmit({ name, lastName, email, password, companyName, rut })
+        onSubmit({ name, lastName, email, password, companyName, rut, declaresIva })
     }
 
     const isDisabled = !name || !lastName || !email || !password || !companyName || !rut
@@ -165,6 +166,25 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     maxLength={12}
                     icon={<FileText size={18} color="#94A3B8" />}
                 />
+            </div>
+
+            <div className={styles.ivaRow}>
+                <div className={styles.ivaText}>
+                    <p className={styles.ivaLabel}>Mi negocio declara IVA</p>
+                    <p className={styles.ivaHelp}>
+                        Actívalo si tu negocio declara IVA ante el SII; puedes cambiarlo después en tu perfil.
+                    </p>
+                </div>
+                <button
+                    type="button"
+                    role="switch"
+                    aria-checked={declaresIva}
+                    aria-label="Declarar IVA"
+                    className={`${styles.toggle} ${declaresIva ? styles.toggleOn : ''}`}
+                    onClick={() => setDeclaresIva((v) => !v)}
+                >
+                    <span className={styles.toggleKnob} />
+                </button>
             </div>
 
             {error && <p className={styles.error}>{error}</p>}
