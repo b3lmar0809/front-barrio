@@ -12,8 +12,10 @@ interface UserState {
   name: string
   email: string
   companyName: string
+  rut: string
   planType: string
   planLimit: number | null
+  declaresIva: boolean
   isAuthenticated: boolean
 }
 
@@ -22,8 +24,10 @@ const initialState: UserState = {
   name: '',
   email: '',
   companyName: '',
+  rut: '',
   planType: '',
   planLimit: null,
+  declaresIva: false,
   isAuthenticated: false,
 }
 
@@ -36,8 +40,10 @@ const userSlice = createSlice({
       state.name = action.payload.name
       state.email = action.payload.email
       state.companyName = action.payload.companyName
+      state.rut = action.payload.rut ?? ''
       state.planType = action.payload.planType
       state.planLimit = action.payload.planLimit
+      state.declaresIva = action.payload.declaresIva ?? false
       state.isAuthenticated = true
     },
     clearUser(state) {
@@ -45,8 +51,10 @@ const userSlice = createSlice({
       state.name = ''
       state.email = ''
       state.companyName = ''
+      state.rut = ''
       state.planType = ''
       state.planLimit = null
+      state.declaresIva = false
       state.isAuthenticated = false
     },
   },
