@@ -13,8 +13,8 @@ interface SearchBarProps {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     onSearch: () => void
-    onScannerEnter: () => void
-    onCameraToggle: () => void
+    onScannerEnter?: () => void
+    onCameraToggle?: () => void
     cameraOpen?: boolean
     placeholder?: string
 }
@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     placeholder = 'Buscar...',
 }) => {
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') onScannerEnter()
+        if (e.key === 'Enter') onScannerEnter?.()
     }
 
     return (
@@ -44,15 +44,17 @@ const SearchBar: React.FC<SearchBarProps> = ({
             <button className={styles.searchBtn} onClick={onSearch} type="button">
                 Buscar
             </button>
-            <button
-                className={`${styles.cameraBtn} ${cameraOpen ? styles.cameraBtnActive : ''}`}
-                onClick={onCameraToggle}
-                type="button"
-                aria-label="Escanear con cámara"
-                aria-pressed={cameraOpen}
-            >
-                <Camera size={20} />
-            </button>
+            {onCameraToggle && (
+                <button
+                    className={`${styles.cameraBtn} ${cameraOpen ? styles.cameraBtnActive : ''}`}
+                    onClick={onCameraToggle}
+                    type="button"
+                    aria-label="Escanear con cámara"
+                    aria-pressed={cameraOpen}
+                >
+                    <Camera size={20} />
+                </button>
+            )}
         </div>
     )
 }
