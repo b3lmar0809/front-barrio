@@ -1,0 +1,189 @@
+/**
+ * SaleDetailModal organism
+ * @Version: 1.0.0 - 29 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 29 jun. 2026
+ */
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 24px 24px 0;
+    flex-shrink: 0;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1E293B;
+    margin: 0 0 4px;
+}
+
+.subtitle {
+    font-size: 0.8125rem;
+    color: #94A3B8;
+    margin: 0;
+}
+
+.close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+    line-height: 0;
+    margin-left: 16px;
+}
+
+.close:hover {
+    color: #475569;
+}
+
+/* ── Body (scrollable) ────────────────────────────────────────────────────── */
+
+.body {
+    padding: 20px 24px 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Lista de productos ───────────────────────────────────────────────────── */
+
+.itemList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #F1F5F9;
+    font-size: 0.875rem;
+}
+
+.item:first-child {
+    padding-top: 0;
+}
+
+.item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.itemName {
+    color: #1E293B;
+    font-weight: 500;
+    flex: 1;
+    min-width: 0;
+}
+
+.itemQty {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+.itemSubtotal {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #1E293B;
+    white-space: nowrap;
+}
+
+/* ── Bloque resumen ───────────────────────────────────────────────────────── */
+
+.summary {
+    background: #F8FAFC;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summaryLabel {
+    font-size: 0.8125rem;
+    color: #64748B;
+}
+
+.summaryValue {
+    font-size: 0.8125rem;
+    color: #475569;
+    font-variant-numeric: tabular-nums;
+}
+
+.noData {
+    font-size: 0.8125rem;
+    color: #94A3B8;
+    font-style: italic;
+}
+
+/* Píldoras de método de pago */
+.pillCash {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.pillCard {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #EEF2FF;
+    color: #4F46E5;
+}
+
+/* Línea divisoria punteada antes del total */
+.divider {
+    border: none;
+    border-top: 1px dashed #E2E8F0;
+    margin: 2px 0 0;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalLabel {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.totalValue {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #059669;
+    font-variant-numeric: tabular-nums;
+}
