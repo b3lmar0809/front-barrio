@@ -1,0 +1,28 @@
+/**
+ * SaleRowSkeleton molecule
+ * @Version: 1.0.0 - 29 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 29 jun. 2026
+ */
+
+.row {
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.cell {
+    padding: 16px 16px;
+}
+
+.rightAlign {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.centerAlign {
+    display: flex;
+    justify-content: center;
+}
