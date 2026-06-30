@@ -33,7 +33,7 @@ const SalesBarChart: React.FC<SalesBarChartProps> = ({ data }) => (
             <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" name="Ventas" fill="#6366f1" radius={[4, 4, 0, 0]}>
+            <Bar dataKey="count" name="Ventas" fill="#059669" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="count" position="top" style={{ fontSize: 11, fill: '#64748b' }} />
             </Bar>
         </BarChart>
