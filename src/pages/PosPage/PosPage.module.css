@@ -38,38 +38,9 @@
     margin: 0;
 }
 
-/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+/* ── Panel inline de cámara ───────────────────────────────────────────────── */
 
-.tabs {
-    display: flex;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-.tab {
-    padding: 0.5rem 1.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #64748b;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-}
-
-.tab:hover {
-    color: #1e293b;
-}
-
-/* Tab seleccionado */
-.tabActive {
-    color: #6366f1;
-    border-bottom-color: #6366f1;
-}
-
-/* Contenido de cada tab */
-.tabContent {
+.cameraPanel {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -136,116 +107,219 @@
     object-fit: cover;
 }
 
-/* ── Pistola scanner ──────────────────────────────────────────────────────── */
-
-/* Input visible que recibe los datos de la pistola (auto-focus) */
-.scannerInput {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.875rem 1rem;
-    border: 2px dashed #6366f1;
-    border-radius: 0.5rem;
-    font-size: 1.125rem;
-    text-align: center;
-    color: #1e293b;
-    background: #f8faff;
-    transition: background 0.15s;
-}
-
-.scannerInput:focus {
-    outline: none;
-    background: #eef2ff;
-}
-
 /* ── Sección de pago ──────────────────────────────────────────────────────── */
 
 .payment {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding: 1rem;
+    gap: 12px;
+    padding: 16px;
     background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
 }
 
-/* Botones EFECTIVO / TARJETA */
+/* Segmented control EFECTIVO / TARJETA */
 .paymentMethods {
     display: flex;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    overflow: hidden;
+    background: #F1F5F9;
+    border-radius: 10px;
+    padding: 4px;
+    gap: 4px;
 }
 
 .methodBtn {
     flex: 1;
-    padding: 0.625rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    background: #f8fafc;
-    color: #64748b;
+    height: 36px;
     border: none;
+    border-radius: 7px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748B;
+    background: transparent;
     cursor: pointer;
+    font-family: inherit;
     transition: background 0.15s, color 0.15s;
 }
 
-.methodBtn:not(:last-child) {
-    border-right: 1px solid #e2e8f0;
-}
-
-/* Método activo */
 .methodActive {
-    background: #6366f1;
+    background: #059669;
     color: #ffffff;
+    font-weight: 600;
 }
 
-/* ── Efectivo ─────────────────────────────────────────────────────────────── */
+/* ── Monto recibido (efectivo) ────────────────────────────────────────────── */
 
 .cashSection {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 6px;
 }
 
 .cashLabel {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 500;
     color: #475569;
 }
 
+.cashInputWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: #F8FAFC;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.cashInputWrapper:focus-within {
+    border-color: #059669;
+    background: #ffffff;
+}
+
+.cashPrefix {
+    padding: 0 10px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #94A3B8;
+    flex-shrink: 0;
+    user-select: none;
+}
+
 .cashInput {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 10px 10px 10px 0;
     font-size: 1rem;
-    color: #1e293b;
-    background: #f8fafc;
+    font-weight: 500;
+    color: #1E293B;
+    font-variant-numeric: tabular-nums;
+    font-family: inherit;
+    min-width: 0;
 }
 
 .cashInput:focus {
     outline: none;
-    border-color: #6366f1;
-    background: #ffffff;
 }
 
-/* Vuelto calculado en tiempo real */
-.change {
+/* ── Desglose de pago ─────────────────────────────────────────────────────── */
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0;
+    border-top: 1px solid #F1F5F9;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.summaryRow {
     display: flex;
     justify-content: space-between;
-    padding: 0.625rem 0.75rem;
-    background: #f0fdf4;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #16a34a;
+    align-items: center;
 }
 
-/* Vuelto negativo (monto insuficiente) */
-.changeNegative {
-    background: #fef2f2;
-    color: #ef4444;
+.summaryLabel {
+    font-size: 0.875rem;
+    color: #64748B;
+}
+
+.summaryValue {
+    font-size: 0.875rem;
+    color: #64748B;
+    font-variant-numeric: tabular-nums;
+}
+
+.totalRow {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid #E2E8F0;
+}
+
+.totalLabel {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.totalValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #059669;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Vuelto ───────────────────────────────────────────────────────────────── */
+
+.changeBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #ECFDF5;
+    border-radius: 8px;
+}
+
+.changeLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #047857;
+}
+
+.changeValue {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #047857;
+    font-variant-numeric: tabular-nums;
+}
+
+.shortfall {
+    font-size: 0.8125rem;
+    color: #EF4444;
+    text-align: center;
+    margin: 0;
+}
+
+/* ── Botón confirmar venta ────────────────────────────────────────────────── */
+
+.confirmBtn {
+    width: 100%;
+    height: 48px;
+    background: #059669;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.confirmBtn:hover:not(:disabled) {
+    background: #047857;
+}
+
+.confirmBtn:disabled {
+    background: #A7F3D0;
+    cursor: not-allowed;
+}
+
+.confirmSpinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 /* ── Mensajes ─────────────────────────────────────────────────────────────── */
@@ -328,8 +402,8 @@
     }
 
     .mobileTabActive {
-        color: #6366f1;
-        border-bottom-color: #6366f1;
+        color: #059669;
+        border-bottom-color: #059669;
     }
 
     /* Panel oculto en móvil según tab activo */

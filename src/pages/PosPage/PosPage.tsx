@@ -13,26 +13,25 @@ import { searchByText, searchByCode } from '../../api/ProductApi'
 import type { Product } from '../../api/ProductApi'
 import { createSale } from '../../api/SaleApi'
 import { useAppSelector } from '../../app/hooks'
-import { formatCLP } from '../../utils/formatters'
+import { formatCLP, formatInputCLP, parseCLP } from '../../utils/formatters'
 import SearchBar from '../../components/molecules/SearchBar/SearchBar'
 import CartList from '../../components/organisms/CartList/CartList'
 import Spinner from '../../components/atoms/Spinner/Spinner'
-import Button from '../../components/atoms/Button/Button'
 import styles from './PosPage.module.css'
 
-type Tab           = 'text' | 'camera' | 'scanner'
 type PaymentMethod = 'CASH' | 'CARD'
 type MobilePanel   = 'search' | 'cart'
 
 const PosPage: React.FC = () => {
     //usuario autenticado (para llamadas API)
-    const userId = useAppSelector((s) => s.user.id)
+    const userId      = useAppSelector((s) => s.user.id)
+    const declaresIva = useAppSelector((s) => s.user.declaresIva)
 
     //estado del carrito (hook centralizado)
     const { cart, addItem, removeItem, updateQuantity, clearCart, total } = useCart()
 
-    //activo: texto / camara / pistola
-    const [activeTab, setActiveTab] = useState<Tab>('text')
+    //controla si el panel de cámara está abierto
+    const [cameraOpen, setCameraOpen] = useState(false)
 
     // ── Panel activo en móvil: búsqueda o carrito ─────────────────────────────
     const [mobilePanel, setMobilePanel] = useState<MobilePanel>('search')
@@ -96,41 +95,32 @@ const PosPage: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const { isScanning, startScanning, stopScanning } = useBarcodeScanner({ onScan: handleBarcodeScan })
 
-    //inicia la camara al entrar al tab y la detiene al salir
+    //inicia la camara al abrir el panel y la detiene al cerrarlo
     useEffect(() => {
-        if (activeTab === 'camera') {
+        if (cameraOpen) {
             startScanning(videoRef)
         } else {
             stopScanning()
         }
-        // Cleanup: libera la cámara si el componente se desmonta
         return () => stopScanning()
-    }, [activeTab]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [cameraOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    // PISTOLA SCANNER USB
-    //La pistola funciona como teclado: escribe el codigo y envía Enter
-    const [scannerCode, setScannerCode] = useState('')
-    const scannerInputRef = useRef<HTMLInputElement>(null)
-
-    //enfoca el input oculto automaticamente al activar el tab
-    useEffect(() => {
-        if (activeTab === 'scanner') scannerInputRef.current?.focus()
-    }, [activeTab])
-
-    //al presionar Enter con un codigo, dispara la búsqueda
-    const handleScannerKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && scannerCode.trim()) {
-            handleBarcodeScan(scannerCode.trim())
-            setScannerCode('')
-        }
+    // PISTOLA SCANNER USB — el lector escribe en el input unificado y envía Enter
+    const handleScannerEnter = () => {
+        if (!query.trim()) return
+        const code = query.trim()
+        setQuery('')
+        handleBarcodeScan(code)
     }
 
     //pago
     const [paymentMethod,  setPaymentMethod]  = useState<PaymentMethod>('CASH')
     const [amountReceived, setAmountReceived] = useState('')
 
-    //vuelto calculado en tiempo real (solo para efectivo)
-    const change = parseFloat(amountReceived || '0') - total
+    //vuelto y desglose de IVA (solo display, no modifica el total)
+    const receivedNum = parseInt(parseCLP(amountReceived) || '0', 10)
+    const change      = receivedNum - total
+    const iva         = Math.round(total * 19 / 119)
 
     //confirma la venta
     const [confirming,   setConfirming]   = useState(false)
@@ -150,9 +140,7 @@ const PosPage: React.FC = () => {
                     barcode:   item.barcode,
                 })),
                 paymentMethod,
-                amountReceived: paymentMethod === 'CARD'
-                    ? total
-                    : parseFloat(amountReceived || '0'),
+                amountReceived: paymentMethod === 'CARD' ? total : receivedNum,
             }
         try {
             await createSale(payload)
@@ -189,60 +177,24 @@ const PosPage: React.FC = () => {
                 ))}
             </div>
 
-            {/* columna izquierda, buaqueda y entrada de producto */}
+            {/* columna izquierda, búsqueda y entrada de producto */}
             <div className={`${styles.left} ${mobilePanel !== 'search' ? styles.panelHidden : ''}`}>
                 <h2 className={styles.sectionTitle}>Punto de Venta</h2>
 
-                {/* selecciona el metodo de entrada */}
-                <div className={styles.tabs}>
-                    {(['text', 'camera', 'scanner'] as Tab[]).map((tab) => (
-                        <button
-                            key={tab}
-                            className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ''}`}
-                            onClick={() => setActiveTab(tab)}
-                        >
-                            {tab === 'text'    && 'Buscar'}
-                            {tab === 'camera'  && 'Camara'}
-                            {tab === 'scanner' && 'Scanner'}
-                        </button>
-                    ))}
-                </div>
+                {/* barra unificada: texto + pistola USB + cámara */}
+                <SearchBar
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onSearch={handleTextSearch}
+                    onScannerEnter={handleScannerEnter}
+                    onCameraToggle={() => setCameraOpen((o) => !o)}
+                    cameraOpen={cameraOpen}
+                    placeholder="Buscar producto por nombre o escanear código..."
+                />
 
-                {/*busqueda por texto  */}
-                {activeTab === 'text' && (
-                    <div className={styles.tabContent}>
-                        <SearchBar
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            onSearch={handleTextSearch}
-                            placeholder="Buscar producto por nombre..."
-                        />
-                        {searching && <div className={styles.center}><Spinner size="sm" /></div>}
-                        {searchError && <p className={styles.error}>{searchError}</p>}
-
-                        {/* lista de resultados — clic agrega al carrito */}
-                        {results.length > 0 && (
-                            <ul className={styles.resultList}>
-                                {results.map((p) => (
-                                    <li
-                                        key={p.id}
-                                        className={styles.resultItem}
-                                        onClick={() => addProductToCart(p)}
-                                    >
-                                        <span className={styles.resultName}>{p.name}</span>
-                                        <span className={styles.resultCode}>{p.barcode}</span>
-                                        <span className={styles.resultPrice}>{formatCLP(p.salePrice)}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                )}
-
-                {/*tab 2: Ca mara (useBarcodeScanner) */}
-                {activeTab === 'camera' && (
-                    <div className={styles.tabContent}>
-                        {/*el elemento video que recibe el stream de la camara */}
+                {/* panel de cámara — aparece inline debajo de la barra */}
+                {cameraOpen && (
+                    <div className={styles.cameraPanel}>
                         <video
                             ref={videoRef}
                             className={styles.video}
@@ -250,52 +202,53 @@ const PosPage: React.FC = () => {
                             playsInline
                             muted
                         />
-                        {!isScanning && <p className={styles.hint}>Iniciando camara...</p>}
+                        {!isScanning && <p className={styles.hint}>Iniciando cámara...</p>}
                         {barcodeError && <p className={styles.error}>{barcodeError}</p>}
                     </div>
                 )}
 
-                {/*pistolo scanner*/}
-                {activeTab === 'scanner' && (
-                    <div className={styles.tabContent}>
-                        <p className={styles.hint}>
-                            Apunta la pistola al codigo de barras, codigo se captura automaticamente al escanear.
-                        </p>
-                        {/*input que recibe los caracteres de la pistola y dispara en Enter */}
-                        <input
-                            ref={scannerInputRef}
-                            className={styles.scannerInput}
-                            value={scannerCode}
-                            onChange={(e) => setScannerCode(e.target.value)}
-                            onKeyDown={handleScannerKey}
-                            placeholder="Esperando codigo..."
-                            autoFocus
-                        />
-                        {barcodeError && <p className={styles.error}>{barcodeError}</p>}
-                    </div>
+                {searching && <div className={styles.center}><Spinner size="sm" /></div>}
+                {searchError && <p className={styles.error}>{searchError}</p>}
+                {!cameraOpen && barcodeError && <p className={styles.error}>{barcodeError}</p>}
+
+                {/* lista de resultados — clic agrega al carrito */}
+                {results.length > 0 && (
+                    <ul className={styles.resultList}>
+                        {results.map((p) => (
+                            <li
+                                key={p.id}
+                                className={styles.resultItem}
+                                onClick={() => addProductToCart(p)}
+                            >
+                                <span className={styles.resultName}>{p.name}</span>
+                                <span className={styles.resultCode}>{p.barcode}</span>
+                                <span className={styles.resultPrice}>{formatCLP(p.salePrice)}</span>
+                            </li>
+                        ))}
+                    </ul>
                 )}
             </div>
 
-            {/* columna derecha pago */}
+            {/* columna derecha — carrito y pago */}
             <div className={`${styles.right} ${mobilePanel !== 'cart' ? styles.panelHidden : ''}`}>
                 <h2 className={styles.sectionTitle}>Carrito</h2>
 
-                {/* Lista de items con total incluido */}
+                {/* Lista de productos */}
                 <CartList
                     items={cart}
                     onRemove={removeItem}
                     onQuantityChange={updateQuantity}
-                    total={total}
                 />
 
-                {/*seccion de pago */}
+                {/* Panel de pago */}
                 <div className={styles.payment}>
 
-                    {/* selector EFECTIVO / TARJETA */}
+                    {/* Segmented control EFECTIVO / TARJETA */}
                     <div className={styles.paymentMethods}>
                         {(['CASH', 'CARD'] as PaymentMethod[]).map((method) => (
                             <button
                                 key={method}
+                                type="button"
                                 className={`${styles.methodBtn} ${paymentMethod === method ? styles.methodActive : ''}`}
                                 onClick={() => setPaymentMethod(method)}
                             >
@@ -304,40 +257,76 @@ const PosPage: React.FC = () => {
                         ))}
                     </div>
 
-                    {/* monto recibido y vuelto — solo visible en efectivo */}
+                    {/* Monto recibido — solo EFECTIVO */}
                     {paymentMethod === 'CASH' && (
                         <div className={styles.cashSection}>
-                            <label className={styles.cashLabel}>Monto recibido</label>
-                            <input
-                                className={styles.cashInput}
-                                type="number"
-                                min={0}
-                                value={amountReceived}
-                                onChange={(e) => setAmountReceived(e.target.value)}
-                                placeholder="$0"
-                            />
-                            {/* vuelto en tiempo real — rojo si el monto es insuficiente */}
-                            {parseFloat(amountReceived || '0') > 0 && (
-                                <div className={`${styles.change} ${change < 0 ? styles.changeNegative : ''}`}>
-                                    <span>Vuelto</span>
-                                    <span>{formatCLP(change >= 0 ? change : 0)}</span>
-                                </div>
-                            )}
+                            <label className={styles.cashLabel} htmlFor="cashReceived">
+                                Monto recibido
+                            </label>
+                            <div className={styles.cashInputWrapper}>
+                                <span className={styles.cashPrefix}>$</span>
+                                <input
+                                    id="cashReceived"
+                                    className={styles.cashInput}
+                                    type="text"
+                                    inputMode="numeric"
+                                    value={amountReceived}
+                                    onChange={(e) => setAmountReceived(formatInputCLP(e.target.value))}
+                                    placeholder="0"
+                                    autoComplete="off"
+                                />
+                            </div>
                         </div>
                     )}
 
-                    {/* mensaje de resultado de la venta */}
+                    {/* Desglose: subtotal / IVA / total */}
+                    <div className={styles.summary}>
+                        <div className={styles.summaryRow}>
+                            <span className={styles.summaryLabel}>Subtotal</span>
+                            <span className={styles.summaryValue}>{formatCLP(total)}</span>
+                        </div>
+                        {declaresIva && (
+                            <div className={styles.summaryRow}>
+                                <span className={styles.summaryLabel}>IVA (19%)</span>
+                                <span className={styles.summaryValue}>{formatCLP(iva)}</span>
+                            </div>
+                        )}
+                        <div className={`${styles.summaryRow} ${styles.totalRow}`}>
+                            <span className={styles.totalLabel}>Total</span>
+                            <span className={styles.totalValue}>{formatCLP(total)}</span>
+                        </div>
+                    </div>
+
+                    {/* Vuelto */}
+                    {paymentMethod === 'CASH' && amountReceived !== '' && receivedNum >= total && total > 0 && (
+                        <div className={styles.changeBox}>
+                            <span className={styles.changeLabel}>Vuelto</span>
+                            <span className={styles.changeValue}>{formatCLP(change)}</span>
+                        </div>
+                    )}
+                    {paymentMethod === 'CASH' && amountReceived !== '' && receivedNum < total && (
+                        <p className={styles.shortfall}>
+                            Faltan {formatCLP(total - receivedNum)} para completar el pago
+                        </p>
+                    )}
+
+                    {/* Mensajes de resultado */}
                     {saleSuccess && <p className={styles.success}>{saleSuccess}</p>}
                     {saleError   && <p className={styles.error}>{saleError}</p>}
 
-                    {/* confirmar venta, deshabilitado si el carrito está vacio */}
-                    <Button
-                        label="Confirmar venta"
-                        variant="primary"
-                        isLoading={confirming}
-                        disabled={cart.length === 0 || confirming}
+                    {/* Confirmar venta */}
+                    <button
+                        type="button"
+                        className={styles.confirmBtn}
                         onClick={handleConfirmSale}
-                    />
+                        disabled={
+                            confirming ||
+                            cart.length === 0 ||
+                            (paymentMethod === 'CASH' && receivedNum < total)
+                        }
+                    >
+                        {confirming ? <span className={styles.confirmSpinner} /> : 'Confirmar venta'}
+                    </button>
                 </div>
             </div>
         </div>
