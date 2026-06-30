@@ -40,7 +40,7 @@ const TopProductsChart: React.FC<TopProductsChartProps> = ({ data }) => (
                 tick={{ fontSize: 12, fill: '#64748b' }}
             />
             <Tooltip formatter={(value) => [value ?? 0, 'Unidades vendidas']} />
-            <Bar dataKey="qty" name="Unidades" fill="#f59e0b" radius={[0, 4, 4, 0]} />
+            <Bar dataKey="qty" name="Unidades" fill="#059669" radius={[0, 4, 4, 0]} />
         </BarChart>
     </ResponsiveContainer>
 )

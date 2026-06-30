@@ -42,9 +42,9 @@ const RevenueLineChart: React.FC<RevenueLineChartProps> = ({ data }) => (
                 type="monotone"
                 dataKey="total"
                 name="Ingresos"
-                stroke="#10b981"
+                stroke="#059669"
                 strokeWidth={2}
-                dot={{ r: 4, fill: '#10b981' }}
+                dot={{ r: 4, fill: '#059669' }}
                 activeDot={{ r: 6 }}
             />
         </LineChart>
