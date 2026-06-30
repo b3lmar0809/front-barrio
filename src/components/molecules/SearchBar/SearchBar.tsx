@@ -5,14 +5,17 @@
  * @Since: 1.0.0 - 06 may. 2026
  */
 import React from 'react'
+import { Camera } from 'lucide-react'
 import Input from '../../atoms/Input/Input'
-import Button from '../../atoms/Button/Button'
 import styles from './SearchBar.module.css'
 
 interface SearchBarProps {
     value: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     onSearch: () => void
+    onScannerEnter: () => void
+    onCameraToggle: () => void
+    cameraOpen?: boolean
     placeholder?: string
 }
 
@@ -20,10 +23,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
     value,
     onChange,
     onSearch,
+    onScannerEnter,
+    onCameraToggle,
+    cameraOpen = false,
     placeholder = 'Buscar...',
 }) => {
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') onSearch()
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') onScannerEnter()
     }
 
     return (
@@ -35,7 +41,18 @@ const SearchBar: React.FC<SearchBarProps> = ({
                     placeholder={placeholder}
                 />
             </div>
-            <Button label="Buscar" onClick={onSearch} />
+            <button className={styles.searchBtn} onClick={onSearch} type="button">
+                Buscar
+            </button>
+            <button
+                className={`${styles.cameraBtn} ${cameraOpen ? styles.cameraBtnActive : ''}`}
+                onClick={onCameraToggle}
+                type="button"
+                aria-label="Escanear con cámara"
+                aria-pressed={cameraOpen}
+            >
+                <Camera size={20} />
+            </button>
         </div>
     )
 }
