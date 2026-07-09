@@ -20,9 +20,11 @@ import { getSales } from '../../api/SaleApi'
 import type { SaleResponse } from '../../api/SaleApi'
 import { buildChartData } from '../SalesPage/salesChartHelpers'
 import { formatCLP } from '../../utils/formatters'
-import Spinner from '../../components/atoms/Spinner/Spinner'
 import Badge from '../../components/atoms/Badge/Badge'
 import StatCard from '../../components/molecules/StatCard/StatCard'
+import KPICardSkeleton from '../../components/molecules/KPICardSkeleton/KPICardSkeleton'
+import ProductListSkeleton from '../../components/molecules/ProductListSkeleton/ProductListSkeleton'
+import ChartSkeleton from '../../components/molecules/ChartSkeleton/ChartSkeleton'
 import SalesBarChart from '../../components/atoms/charts/SalesBarChart'
 import RevenueLineChart from '../../components/atoms/charts/RevenueLineChart'
 import PaymentPieChart from '../../components/atoms/charts/PaymentPieChart'
@@ -118,44 +120,49 @@ const ReportsPage: React.FC = () => {
 
     return (
         <div className={styles.page}>
+            {/* Header — siempre visible */}
             <div className={styles.pageHeader}>
                 <h1 className={styles.title}>Reportes</h1>
                 <p className={styles.subtitle}>Análisis de ventas, ingresos y rendimiento del negocio.</p>
             </div>
 
-            {loading && (
-                <div className={styles.center}>
-                    <Spinner size="lg" />
-                </div>
-            )}
-
             {error && <p className={styles.error}>{error}</p>}
 
-            {!loading && !error && dashboard && (
+            {!error && (
                 <>
                     {/* Fila 1: KPIs del mes */}
                     <div className={styles.statsGrid}>
-                        <StatCard
-                            variant="success"
-                            title="Ventas del mes"
-                            value={formatCLP(dashboard.totalSoldMonth)}
-                            subtitle={dashboard.currentPeriod}
-                        />
-                        {declaresIva && (
-                            <StatCard
-                                variant="neutral"
-                                title="IVA del mes"
-                                value={formatCLP(dashboard.totalIvaMonth)}
-                                subtitle="IVA incluido (19%)"
-                            />
-                        )}
-                        {declaresIva && (
-                            <StatCard
-                                variant="warning"
-                                title="Ganancia neta"
-                                value={formatCLP(dashboard.totalProfitMonth)}
-                                subtitle="Neto sin IVA"
-                            />
+                        {loading ? (
+                            <>
+                                <KPICardSkeleton />
+                                {declaresIva && <KPICardSkeleton />}
+                                {declaresIva && <KPICardSkeleton />}
+                            </>
+                        ) : dashboard && (
+                            <>
+                                <StatCard
+                                    variant="success"
+                                    title="Ventas del mes"
+                                    value={formatCLP(dashboard.totalSoldMonth)}
+                                    subtitle={dashboard.currentPeriod}
+                                />
+                                {declaresIva && (
+                                    <StatCard
+                                        variant="neutral"
+                                        title="IVA del mes"
+                                        value={formatCLP(dashboard.totalIvaMonth)}
+                                        subtitle="IVA incluido (19%)"
+                                    />
+                                )}
+                                {declaresIva && (
+                                    <StatCard
+                                        variant="warning"
+                                        title="Ganancia neta"
+                                        value={formatCLP(dashboard.totalProfitMonth)}
+                                        subtitle="Neto sin IVA"
+                                    />
+                                )}
+                            </>
                         )}
                     </div>
 
@@ -163,15 +170,15 @@ const ReportsPage: React.FC = () => {
                     <div className={styles.chartsGrid}>
                         <div className={styles.chartCard}>
                             <h2 className={styles.cardTitle}>Ventas por día</h2>
-                            {salesLoading
-                                ? <div className={styles.center}><Spinner size="md" /></div>
+                            {loading || salesLoading
+                                ? <ChartSkeleton />
                                 : <SalesBarChart data={dailySales} />
                             }
                         </div>
                         <div className={styles.chartCard}>
                             <h2 className={styles.cardTitle}>Ingresos por día</h2>
-                            {salesLoading
-                                ? <div className={styles.center}><Spinner size="md" /></div>
+                            {loading || salesLoading
+                                ? <ChartSkeleton />
                                 : <RevenueLineChart data={dailyRevenue} />
                             }
                         </div>
@@ -181,8 +188,8 @@ const ReportsPage: React.FC = () => {
                     <div className={styles.contentGrid}>
                         <div className={styles.chartCard}>
                             <h2 className={styles.cardTitle}>Métodos de pago</h2>
-                            {salesLoading ? (
-                                <div className={styles.center}><Spinner size="md" /></div>
+                            {loading || salesLoading ? (
+                                <ChartSkeleton circle />
                             ) : paymentMethods.length > 0 ? (
                                 <PaymentPieChart data={paymentMethods} />
                             ) : (
@@ -192,11 +199,13 @@ const ReportsPage: React.FC = () => {
 
                         <div className={styles.card}>
                             <h2 className={styles.cardTitle}>Top productos del mes</h2>
-                            {dashboard.topProducts.length === 0 ? (
+                            {loading ? (
+                                <ProductListSkeleton rows={5} />
+                            ) : dashboard?.topProducts.length === 0 ? (
                                 <p className={styles.empty}>Sin datos este período</p>
                             ) : (
                                 <ul className={styles.list}>
-                                    {dashboard.topProducts.map((p, i) => (
+                                    {dashboard?.topProducts.map((p, i) => (
                                         <li key={p.productId} className={styles.productItem}>
                                             <div className={styles.productHeader}>
                                                 <span className={styles.rank}>#{i + 1}</span>
@@ -220,7 +229,9 @@ const ReportsPage: React.FC = () => {
                     {/* Stock bajo */}
                     <div className={styles.card}>
                         <h2 className={styles.cardTitle}>Stock bajo</h2>
-                        {lowStock.length === 0 ? (
+                        {loading ? (
+                            <ProductListSkeleton rows={3} />
+                        ) : lowStock.length === 0 ? (
                             <div className={styles.stockOk}>
                                 <Badge variant="success" text="Todo en orden" />
                             </div>
@@ -254,10 +265,11 @@ const ReportsPage: React.FC = () => {
                                 onChange={e => setPeriod(e.target.value)}
                             />
                         </div>
-
                         {reportLoading ? (
-                            <div className={styles.center}>
-                                <Spinner size="md" />
+                            <div className={styles.statsGrid}>
+                                <KPICardSkeleton />
+                                {declaresIva && <KPICardSkeleton />}
+                                {declaresIva && <KPICardSkeleton />}
                             </div>
                         ) : reportError ? (
                             <p className={styles.error}>{reportError}</p>
