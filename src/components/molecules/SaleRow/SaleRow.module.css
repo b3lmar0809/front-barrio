@@ -1,0 +1,70 @@
+/**
+ * SaleRow molecule
+ * @Version: 1.0.0 - 29 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 29 jun. 2026
+ */
+
+.row {
+    cursor: pointer;
+    border-bottom: 1px solid #F1F5F9;
+    transition: background 0.12s;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.row:hover {
+    background: #F8FAFC;
+}
+
+.cell {
+    padding: 16px 16px;
+    font-size: 0.875rem;
+    color: #1E293B;
+    white-space: nowrap;
+}
+
+.right {
+    text-align: right;
+}
+
+.total {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.chevronCell {
+    width: 40px;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 12px;
+}
+
+.chevron {
+    font-size: 18px;
+    color: #CBD5E1;
+    line-height: 1;
+}
+
+/* Píldoras de método de pago */
+.pillCash {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.pillCard {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #EEF2FF;
+    color: #4F46E5;
+}

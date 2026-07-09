@@ -1,0 +1,15 @@
+/**
+ * QuickAccessSkeleton class
+ * @Version: 1.0.0 - 18 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 18 jun. 2026
+ */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    border-radius: 10px;
+}

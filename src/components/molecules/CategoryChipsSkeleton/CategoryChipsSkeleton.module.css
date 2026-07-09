@@ -1,0 +1,16 @@
+/**
+ * CategoryChipsSkeleton.module
+ * @Version: 1.0.0 - 26 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 26 jun. 2026
+ */
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    border-radius: 6px !important;
+}

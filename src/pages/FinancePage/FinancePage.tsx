@@ -8,6 +8,7 @@
  **/
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { ArrowUp, ArrowDown, Scale } from 'lucide-react'
 import type { RootState } from '../../app/Store'
 import {
     getFinances,
@@ -15,11 +16,13 @@ import {
     createFinance,
 } from '../../api/FinanceApi'
 import type { Finance, Balance } from '../../api/FinanceApi'
-import Spinner from '../../components/atoms/Spinner/Spinner'
+import Skeleton from '../../components/atoms/Skeleton/Skeleton'
 import Badge from '../../components/atoms/Badge/Badge'
+import KPICardSkeleton from '../../components/molecules/KPICardSkeleton/KPICardSkeleton'
 import Button from '../../components/atoms/Button/Button'
 import StatCard from '../../components/molecules/StatCard/StatCard'
 import FormField from '../../components/molecules/FormField/FormField'
+import { capitalize } from '../../utils/formatters'
 import styles from './FinancePage.module.css'
 
 const formatCLP = (v: number) =>
@@ -45,6 +48,7 @@ const FinancePage: React.FC = () => {
     const [formError,     setFormError]     = useState<string | null>(null)
     const [fieldErrors,   setFieldErrors]   = useState<{ amount?: string; description?: string }>({})
     const [submitting,    setSubmitting]    = useState(false)
+    const [filter,        setFilter]        = useState<'ALL' | 'INCOME' | 'EXPENSE'>('ALL')
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const raw = e.target.value.replace(/\./g, '')
@@ -112,119 +116,175 @@ const FinancePage: React.FC = () => {
         }
     }
 
+    const filteredFinances = filter === 'ALL'
+        ? finances
+        : finances.filter(f => f.type === filter)
+
     return (
         <div className={styles.page}>
-            <h1 className={styles.title}>Finanzas</h1>
-
-            {loading && (
-                <div className={styles.center}>
-                    <Spinner size="lg" />
-                </div>
-            )}
+            <div className={styles.pageHeader}>
+                <h1 className={styles.title}>Finanzas</h1>
+                <p className={styles.subtitle}>Ingresos, gastos y balance de tu negocio.</p>
+            </div>
 
             {error && <p className={styles.error}>{error}</p>}
 
-            {!loading && !error && (
-                <>
-                    <div className={styles.statsGrid}>
-                        <StatCard
-                            variant="success"
-                            title="Ingresos"
-                            value={formatCLP(balance?.totalIncome ?? 0)}
-                            subtitle={balance?.period}
+            {loading ? (
+                <div className={styles.statsGrid}>
+                    <KPICardSkeleton />
+                    <KPICardSkeleton />
+                    <KPICardSkeleton />
+                </div>
+            ) : !error && (
+                <div className={styles.statsGrid}>
+                    <StatCard
+                        title="Ingresos"
+                        value={formatCLP(balance?.totalIncome ?? 0)}
+                        Icon={ArrowUp}
+                        iconBg="#ECFDF5"
+                        iconColor="#059669"
+                        variant="success"
+                        subtitle={balance?.period}
+                    />
+                    <StatCard
+                        title="Gastos"
+                        value={formatCLP(balance?.totalExpenses ?? 0)}
+                        Icon={ArrowDown}
+                        iconBg="#FEE2E2"
+                        iconColor="#DC2626"
+                        variant="danger"
+                        subtitle={balance?.period}
+                    />
+                    <StatCard
+                        title="Balance"
+                        value={formatCLP(balance?.balance ?? 0)}
+                        Icon={Scale}
+                        iconBg="#EEF2FF"
+                        iconColor="#4F46E5"
+                        variant={(balance?.balance ?? 0) >= 0 ? 'success' : 'danger'}
+                        subtitle="ingresos - gastos"
+                    />
+                </div>
+            )}
+
+            {!error && (
+                <div className={styles.contentGrid}>
+                    <div className={styles.card}>
+                        <h2 className={styles.cardTitle}>Registrar movimiento</h2>
+
+                        <div className={styles.formGroup}>
+                            <label className={styles.label}>Tipo</label>
+                            <div className={styles.typeToggle}>
+                                <button
+                                    type="button"
+                                    className={`${styles.typeBtn} ${type === 'INCOME' ? styles.typeBtnIncome : ''}`}
+                                    onClick={() => setType('INCOME')}
+                                >
+                                    <ArrowUp size={16} />
+                                    Ingreso
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${styles.typeBtn} ${type === 'EXPENSE' ? styles.typeBtnExpense : ''}`}
+                                    onClick={() => setType('EXPENSE')}
+                                >
+                                    <ArrowDown size={16} />
+                                    Gasto
+                                </button>
+                            </div>
+                        </div>
+
+                        <FormField
+                            label="Monto"
+                            name="amount"
+                            type="text"
+                            placeholder="Ej: 5.000"
+                            value={displayAmount}
+                            onChange={handleAmountChange}
+                            required
+                            error={fieldErrors.amount}
                         />
-                        <StatCard
-                            variant="danger"
-                            title="Gastos"
-                            value={formatCLP(balance?.totalExpenses ?? 0)}
-                            subtitle={balance?.period}
+
+                        <FormField
+                            label="Descripción"
+                            name="description"
+                            type="text"
+                            placeholder="Ej: Pago de proveedor"
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                            required
+                            error={fieldErrors.description}
                         />
-                        <StatCard
-                            variant={(balance?.balance ?? 0) >= 0 ? 'success' : 'danger'}
-                            title="Balance"
-                            value={formatCLP(balance?.balance ?? 0)}
-                            subtitle="ingresos - gastos"
+
+                        {formError && <p className={styles.formError}>{formError}</p>}
+
+                        <Button
+                            label="Registrar"
+                            onClick={handleSubmit}
+                            isLoading={submitting}
+                            disabled={submitting}
                         />
                     </div>
 
-                    <div className={styles.contentGrid}>
-                        <div className={styles.card}>
-                            <h2 className={styles.cardTitle}>Registrar movimiento</h2>
-
-                            <div className={styles.formGroup}>
-                                <label className={styles.label} htmlFor="type">Tipo</label>
-                                <select
-                                    id="type"
-                                    className={styles.select}
-                                    value={type}
-                                    onChange={e => setType(e.target.value as 'INCOME' | 'EXPENSE')}
-                                >
-                                    <option value="INCOME">Ingreso</option>
-                                    <option value="EXPENSE">Gasto</option>
-                                </select>
-                            </div>
-
-                            <FormField
-                                label="Monto"
-                                name="amount"
-                                type="text"
-                                placeholder="Ej: 5.000"
-                                value={displayAmount}
-                                onChange={handleAmountChange}
-                                required
-                                error={fieldErrors.amount}
-                            />
-
-                            <FormField
-                                label="Descripción"
-                                name="description"
-                                type="text"
-                                placeholder="Ej: Pago de proveedor"
-                                value={description}
-                                onChange={e => setDescription(e.target.value)}
-                                required
-                                error={fieldErrors.description}
-                            />
-
-                            {formError && <p className={styles.formError}>{formError}</p>}
-
-                            <Button
-                                label="Registrar"
-                                onClick={handleSubmit}
-                                isLoading={submitting}
-                                disabled={submitting}
-                            />
-                        </div>
-
-                        <div className={styles.card}>
+                    <div className={styles.card}>
+                        <div className={styles.movementsHeader}>
                             <h2 className={styles.cardTitle}>Movimientos</h2>
-
-                            {finances.length === 0 ? (
-                                <p className={styles.empty}>No hay movimientos registrados</p>
-                            ) : (
-                                <ul className={styles.list}>
-                                    {finances.map(f => (
-                                        <li key={f.id} className={styles.item}>
-                                            <div className={styles.itemTop}>
-                                                <div className={styles.itemLeft}>
-                                                    <Badge
-                                                        text={f.type === 'INCOME' ? 'Ingreso' : 'Gasto'}
-                                                        variant={f.type === 'INCOME' ? 'success' : 'danger'}
-                                                    />
-                                                    <span className={styles.itemDesc}>{f.description}</span>
-                                                </div>
-                                                <span className={f.type === 'INCOME' ? styles.amountIncome : styles.amountExpense}>
-                                                    {formatCLP(f.amount)}
-                                                </span>
-                                            </div>
-                                            <p className={styles.itemDate}>{formatDate(f.date)}</p>
-                                        </li>
+                            {!loading && (
+                                <div className={styles.filterPills}>
+                                    {(['ALL', 'INCOME', 'EXPENSE'] as const).map(f => (
+                                        <button
+                                            key={f}
+                                            type="button"
+                                            className={`${styles.filterPill} ${filter === f ? styles.filterPillActive : ''}`}
+                                            onClick={() => setFilter(f)}
+                                        >
+                                            {f === 'ALL' ? 'Todos' : f === 'INCOME' ? 'Ingresos' : 'Gastos'}
+                                        </button>
                                     ))}
-                                </ul>
+                                </div>
                             )}
                         </div>
+
+                        {loading ? (
+                            <ul className={styles.list}>
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <li key={i} className={styles.item}>
+                                        <div className={styles.itemTop}>
+                                            <div className={styles.itemLeft}>
+                                                <Skeleton width={60} height={22} className={styles.skeletonPill} />
+                                                <Skeleton width={120} height={14} />
+                                            </div>
+                                            <Skeleton width={70} height={14} />
+                                        </div>
+                                        <Skeleton width={60} height={11} />
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : filteredFinances.length === 0 ? (
+                            <p className={styles.empty}>No hay movimientos registrados</p>
+                        ) : (
+                            <ul className={styles.list}>
+                                {filteredFinances.map(f => (
+                                    <li key={f.id} className={styles.item}>
+                                        <div className={styles.itemTop}>
+                                            <div className={styles.itemLeft}>
+                                                <Badge
+                                                    text={f.type === 'INCOME' ? 'Ingreso' : 'Gasto'}
+                                                    variant={f.type === 'INCOME' ? 'success' : 'danger'}
+                                                />
+                                                <span className={styles.itemDesc}>{capitalize(f.description)}</span>
+                                            </div>
+                                            <span className={f.type === 'INCOME' ? styles.amountIncome : styles.amountExpense}>
+                                                {formatCLP(f.amount)}
+                                            </span>
+                                        </div>
+                                        <p className={styles.itemDate}>{formatDate(f.date)}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
-                </>
+                </div>
             )}
         </div>
     )

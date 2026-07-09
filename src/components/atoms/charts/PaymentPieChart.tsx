@@ -17,7 +17,7 @@ import {
 import type { PieLabelRenderProps } from 'recharts'
 import styles from './PaymentPieChart.module.css'
 
-const COLORS = ['#6366f1', '#10b981']
+const COLORS = ['#059669', '#34D399']
 
 interface PaymentPieChartProps {
     data: { name: string; value: number }[]

@@ -6,7 +6,7 @@
  */
 import React from 'react'
 import type { ProductStats } from '../../../api/ReportApi'
-import { formatCLP } from '../../../utils/formatters'
+import { formatCLP, capitalize } from '../../../utils/formatters'
 import styles from './TopProductsTable.module.css'
 
 interface TopProductsTableProps {
@@ -19,26 +19,23 @@ const TopProductsTable: React.FC<TopProductsTableProps> = ({ products }) => {
     }
 
     return (
-        <table className={styles.table}>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Producto</th>
-                    <th>Unidades vendidas</th>
-                    <th>Total generado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {products.map((p) => (
-                    <tr key={p.productId}>
-                        <td>{p.rankingVentas}</td>
-                        <td>{p.productName}</td>
-                        <td>{p.totalSold}</td>
-                        <td>{formatCLP(p.totalRevenue)}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <div className={styles.list} role="list">
+            {products.map((p) => (
+                <div key={p.productId} className={styles.row} role="listitem">
+                    <span
+                        className={`${styles.rank} ${p.rankingVentas === 1 ? styles.rankFirst : ''}`}
+                        aria-label={`Posición ${p.rankingVentas}`}
+                    >
+                        {p.rankingVentas}
+                    </span>
+                    <span className={styles.name}>{capitalize(p.productName)}</span>
+                    <div className={styles.meta}>
+                        <span className={styles.units}>{p.totalSold} uds</span>
+                        <span className={styles.revenue}>{formatCLP(p.totalRevenue)}</span>
+                    </div>
+                </div>
+            ))}
+        </div>
     )
 }
 

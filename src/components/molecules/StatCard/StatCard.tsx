@@ -5,28 +5,42 @@
  * @Since: 1.0.0 - 06 may. 2026
  */
 import React from 'react'
+import type { LucideIcon } from 'lucide-react'
 import styles from './StatCard.module.css'
 
 interface StatCardProps {
     title: string
     value: string | number
+    Icon?: LucideIcon
+    iconBg?: string
+    iconColor?: string
+    period?: string
+    suffix?: string
+    variant?: 'success' | 'danger' | 'info' | 'neutral' | 'warning'
     subtitle?: string
-    variant?: 'success' | 'warning' | 'danger' | 'info'
 }
 
 const StatCard: React.FC<StatCardProps> = ({
-    title,
-    value,
-    subtitle,
-    variant = 'info',
-}) => {
-    return (
-        <div className={`${styles.card} ${styles[variant]}`}>
-            <p className={styles.title}>{title}</p>
-            <p className={styles.value}>{value}</p>
-            {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+    title, value, Icon, iconBg, iconColor,
+    period, suffix, variant, subtitle,
+}) => (
+    <div className={`${styles.card} ${variant ? styles[variant] : ''}`}>
+        <div className={styles.cardTop}>
+            <span className={styles.title}>{title}</span>
+            {Icon && iconBg && iconColor && (
+                <div className={styles.iconCircle} style={{ backgroundColor: iconBg }}>
+                    <Icon size={16} color={iconColor} />
+                </div>
+            )}
         </div>
-    )
-}
+        <p className={styles.value}>
+            {value}
+            {suffix && <span className={styles.suffix}> {suffix}</span>}
+        </p>
+        {(period || subtitle) && (
+            <p className={styles.period}>{subtitle ?? period}</p>
+        )}
+    </div>
+)
 
 export default StatCard

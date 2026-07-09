@@ -19,35 +19,54 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onQuantityChange }) => {
-    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = parseInt(e.target.value, 10)
-        if (!isNaN(val)) onQuantityChange(item.productId, val)
+    const handleDecrease = () => {
+        if (item.quantity <= 1) {
+            onRemove(item.productId)
+        } else {
+            onQuantityChange(item.productId, item.quantity - 1)
+        }
+    }
+
+    const handleIncrease = () => {
+        onQuantityChange(item.productId, item.quantity + 1)
     }
 
     return (
         <div className={styles.row}>
-            <span className={styles.barcode}>{item.barcode}</span>
+            <div className={styles.info}>
+                <span className={styles.name}>{item.name}</span>
+                <span className={styles.unitPrice}>{formatCLP(item.unitPrice)} c/u</span>
+            </div>
 
-            <span className={styles.name}>{item.name}</span>
-
-            <input
-                className={styles.qty}
-                type="number"
-                min={1}
-                value={item.quantity}
-                onChange={handleQuantityChange}
-            />
-
-            <span className={styles.price}>{formatCLP(item.unitPrice)}</span>
+            <div className={styles.qtyControl}>
+                <button
+                    type="button"
+                    className={styles.qtyBtn}
+                    onClick={handleDecrease}
+                    aria-label="Disminuir cantidad"
+                >
+                    −
+                </button>
+                <span className={styles.qtyNum}>{item.quantity}</span>
+                <button
+                    type="button"
+                    className={styles.qtyBtn}
+                    onClick={handleIncrease}
+                    aria-label="Aumentar cantidad"
+                >
+                    +
+                </button>
+            </div>
 
             <span className={styles.subtotal}>{formatCLP(item.subtotal)}</span>
 
             <button
+                type="button"
                 className={styles.removeBtn}
                 onClick={() => onRemove(item.productId)}
                 aria-label="Eliminar del carrito"
             >
-                <DeleteIcon size={16} />
+                <DeleteIcon size={15} />
             </button>
         </div>
     )

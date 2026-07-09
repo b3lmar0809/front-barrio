@@ -9,7 +9,7 @@ import styles from './Badge.module.css'
 
 interface BadgeProps {
     text: string
-    variant: 'success' | 'warning' | 'danger' | 'info'
+    variant: 'success' | 'warning' | 'danger' | 'info' | 'category' | 'neutral'
 }
 
 const Badge: React.FC<BadgeProps> = ({ text, variant }) => {
