@@ -1,0 +1,13 @@
+/**
+ * ChartSkeleton.module class
+ * @Version: 1.0.0 - 30 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 30 jun. 2026
+ */
+
+.circleWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0;
+}
