@@ -15,12 +15,13 @@ import { useAppSelector } from '../../app/hooks'
 import ProductTable from '../../components/organisms/ProductTable/ProductTable'
 import type { Product as TableProduct } from '../../components/organisms/ProductTable/ProductTable'
 import CategoryManager from '../../components/organisms/CategoryManager/CategoryManager'
+import CategoryModal from '../../components/organisms/CategoryModal/CategoryModal'
 import ProductForm from '../../components/organisms/ProductForm/ProductForm'
 import type { ProductFormValues } from '../../components/organisms/ProductForm/ProductForm'
 import SearchBar from '../../components/molecules/SearchBar/SearchBar'
 import Badge from '../../components/atoms/Badge/Badge'
 import Button from '../../components/atoms/Button/Button'
-import Spinner from '../../components/atoms/Spinner/Spinner'
+import Skeleton from '../../components/atoms/Skeleton/Skeleton'
 import styles from './InventoryPage.module.css'
 
 const InventoryPage: React.FC = () => {
@@ -35,8 +36,8 @@ const InventoryPage: React.FC = () => {
 
     const [query, setQuery] = useState('')
 
-    const [newCatName, setNewCatName] = useState('')
-    const [addingCat,  setAddingCat]  = useState(false)
+    const [addingCat,           setAddingCat]           = useState(false)
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false)
 
     const [showForm,  setShowForm]  = useState(false)
     const [saving,    setSaving]    = useState(false)
@@ -69,13 +70,13 @@ const InventoryPage: React.FC = () => {
             category: category?.name ?? 'Sin categoría',
         }))
 
-    const handleAddCategory = async () => {
-        if (!userId || !newCatName.trim()) return
+    const handleAddCategory = async (name: string) => {
+        if (!userId || !name.trim()) return
         setAddingCat(true)
         try {
-            const cat = await createCategory({ userId, name: newCatName.trim() })
+            const cat = await createCategory({ userId, name: name.trim() })
             setCategories((prev) => [...prev, cat])
-            setNewCatName('')
+            setIsCategoryModalOpen(false)
         } finally {
             setAddingCat(false)
         }
@@ -136,11 +137,9 @@ const InventoryPage: React.FC = () => {
             {/* ── Categorías ─────────────────────────────────── */}
             <CategoryManager
                 categories={categories}
-                newName={newCatName}
-                isAdding={addingCat}
-                onNameChange={setNewCatName}
-                onAdd={handleAddCategory}
+                onOpenModal={() => setIsCategoryModalOpen(true)}
                 onDelete={handleDeleteCategory}
+                loading={loading}
             />
 
             {/* ── Productos ──────────────────────────────────── */}
@@ -148,15 +147,20 @@ const InventoryPage: React.FC = () => {
                 <div className={styles.productsHeader}>
                     <div className={styles.titleRow}>
                         <h2 className={styles.sectionTitle}>Productos</h2>
-                        <Badge text={String(products.length)} variant="info" />
-                        {isFree && planLimit !== null && (
-                            <span className={styles.planLimit}>
-                                {products.length}/{planLimit} productos
-                            </span>
-                        )}
+                        {loading
+                            ? <Skeleton width={80} height={20} />
+                            : <>
+                                <Badge text={String(products.length)} variant="neutral" />
+                                {isFree && planLimit !== null && (
+                                    <span className={styles.planLimit}>
+                                        {products.length}/{planLimit} productos
+                                    </span>
+                                )}
+                            </>
+                        }
                     </div>
                     <Button
-                        label="Agregar producto"
+                        label="+ Agregar producto"
                         onClick={() => setShowForm(true)}
                         disabled={atLimit}
                     />
@@ -169,12 +173,6 @@ const InventoryPage: React.FC = () => {
                     placeholder="Buscar por nombre..."
                 />
 
-                {loading && (
-                    <div className={styles.center}>
-                        <Spinner size="lg" />
-                    </div>
-                )}
-
                 {error && <p className={styles.error}>{error}</p>}
 
                 {!loading && !error && products.length === 0 && (
@@ -185,14 +183,24 @@ const InventoryPage: React.FC = () => {
                     <p className={styles.empty}>No se encontraron productos</p>
                 )}
 
-                {!loading && !error && filtered.length > 0 && (
+                {!error && (loading || filtered.length > 0) && (
                     <ProductTable
                         products={filtered}
                         onDelete={handleDeleteProduct}
                         onEdit={() => {}}
+                        loading={loading}
                     />
                 )}
             </section>
+
+            {/* ── Modal: nueva categoría ────────────────────── */}
+            {isCategoryModalOpen && (
+                <CategoryModal
+                    onClose={() => setIsCategoryModalOpen(false)}
+                    onAdd={handleAddCategory}
+                    isAdding={addingCat}
+                />
+            )}
 
             {/* ── Modal: agregar producto ────────────────────── */}
             {showForm && (

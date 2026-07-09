@@ -1,9 +1,14 @@
 /**
  * AuthTemplate class
- * @Version: 1.0.0 - 06 may. 2026
+ * @Version: 1.1.0 - 16 jun. 2026
  * @Author: Matias Belmar - mati.belmar0625@gmail.com
  * @Since: 1.0.0 - 06 may. 2026
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ── Default (single card) layout ───────────────────────── */
+
 .wrapper {
     min-height: 100vh;
     display: flex;
@@ -30,6 +35,7 @@
 }
 
 .logo {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     font-size: 1.75rem;
     font-weight: 800;
     color: #111827;
@@ -44,4 +50,96 @@
     font-size: 1.125rem;
     font-weight: 500;
     color: #6b7280;
+}
+
+/* ── Split layout ────────────────────────────────────── */
+
+.splitPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F8FAFC;
+    padding: 1.5rem;
+}
+
+.splitWrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1024px;
+    min-height: 580px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+        0 20px 25px -5px rgb(0 0 0 / 0.05),
+        0 8px 10px -6px rgb(0 0 0 / 0.05);
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.leftPanel {
+    flex: 0 0 40%;
+    background: linear-gradient(160deg, #04523C 0%, #0B7355 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.75rem 3rem;
+    gap: 2rem;
+}
+
+.splitLogo {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.splitLogo span {
+    color: #9FE1CB;
+}
+
+.slogan {
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 400;
+}
+
+.benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.rightPanel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 3rem;
+}
+
+@media (max-width: 768px) {
+    .splitPage {
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .splitWrapper {
+        flex-direction: column;
+        min-height: unset;
+        border-radius: 1rem;
+    }
+
+    .leftPanel {
+        flex: none;
+        padding: 2rem 1.75rem;
+        gap: 1.25rem;
+    }
+
+    .rightPanel {
+        padding: 2rem 1.5rem;
+    }
 }

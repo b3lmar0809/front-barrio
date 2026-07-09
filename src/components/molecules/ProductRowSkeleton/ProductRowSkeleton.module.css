@@ -1,0 +1,31 @@
+/**
+ * ProductRowSkeleton.module
+ * @Version: 1.0.0 - 26 jun. 2026
+ * @Author: Matias Belmar - mati.belmar0625@gmail.com
+ * @Since: 1.0.0 - 26 jun. 2026
+ */
+
+/* Replica exacta del grid de ProductTable .row */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 130px 105px 105px 90px 72px 72px 44px;
+    gap: 0.5rem;
+    padding: 0 16px;
+    min-height: 54px;
+    align-items: center;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.pill {
+    border-radius: 999px !important;
+}

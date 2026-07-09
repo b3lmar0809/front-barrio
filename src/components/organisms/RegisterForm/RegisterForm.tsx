@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FormField from '../../molecules/FormField/FormField'
 import Button from '../../atoms/Button/Button'
+import { Mail, Lock, User, Briefcase, FileText } from 'lucide-react'
 import type { RegisterRequest } from '../../../api/AuthApi'
 import styles from './RegisterForm.module.css'
 
@@ -31,13 +32,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     isLoading = false,
     error,
 }) => {
-    const [name,        setName]        = useState('')
-    const [lastName,    setLastName]    = useState('')
-    const [email,       setEmail]       = useState('')
-    const [password,    setPassword]    = useState('')
-    const [companyName, setCompanyName] = useState('')
-    const [rut,         setRut]         = useState('')
-    const [errors,      setErrors]      = useState<{
+    const [name,         setName]         = useState('')
+    const [lastName,     setLastName]     = useState('')
+    const [email,        setEmail]        = useState('')
+    const [password,     setPassword]     = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [companyName,  setCompanyName]  = useState('')
+    const [rut,          setRut]          = useState('')
+    const [declaresIva,  setDeclaresIva]  = useState(false)
+    const [errors,       setErrors]       = useState<{
         name?: string
         email?: string
         password?: string
@@ -82,30 +85,40 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         }
 
         setErrors({})
-        onSubmit({ name, lastName, email, password, companyName, rut })
+        onSubmit({ name, lastName, email, password, companyName, rut, declaresIva })
     }
 
     const isDisabled = !name || !lastName || !email || !password || !companyName || !rut
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            <FormField
-                label="Nombre"
-                name="name"
-                placeholder="Juan"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                error={errors.name}
-            />
-            <FormField
-                label="Apellido"
-                name="lastName"
-                placeholder="Pérez"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-            />
+            <div className={styles.formHeader}>
+                <h1 className={styles.formTitle}>Crear cuenta</h1>
+                <p className={styles.formSubtitle}>Completa tus datos para empezar</p>
+            </div>
+
+            <div className={styles.row}>
+                <FormField
+                    label="Nombre"
+                    name="name"
+                    placeholder="Juan"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    error={errors.name}
+                    icon={<User size={18} color="#94A3B8" />}
+                />
+                <FormField
+                    label="Apellido"
+                    name="lastName"
+                    placeholder="Pérez"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    icon={<User size={18} color="#94A3B8" />}
+                />
+            </div>
+
             <FormField
                 label="Email"
                 name="email"
@@ -115,7 +128,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 error={errors.email}
+                icon={<Mail size={18} color="#94A3B8" />}
             />
+
             <FormField
                 label="Contraseña"
                 name="password"
@@ -125,30 +140,62 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 error={errors.password}
+                icon={<Lock size={18} color="#94A3B8" />}
+                onTogglePassword={() => setShowPassword((p) => !p)}
+                showPassword={showPassword}
             />
-            <FormField
-                label="Nombre de la empresa"
-                name="companyName"
-                placeholder="Mi Empresa S.A."
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                required
-                error={errors.companyName}
-            />
-            <FormField
-                label="RUT"
-                name="rut"
-                placeholder="12.345.678-9"
-                value={rut}
-                onChange={(e) => setRut(formatRut(e.target.value))}
-                required
-            />
+
+            <div className={styles.row}>
+                <FormField
+                    label="Nombre de la empresa"
+                    name="companyName"
+                    placeholder="Mi Empresa S.A."
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    required
+                    error={errors.companyName}
+                    icon={<Briefcase size={18} color="#94A3B8" />}
+                />
+                <FormField
+                    label="RUT"
+                    name="rut"
+                    placeholder="12.345.678-9"
+                    value={rut}
+                    onChange={(e) => setRut(formatRut(e.target.value))}
+                    required
+                    maxLength={12}
+                    icon={<FileText size={18} color="#94A3B8" />}
+                />
+            </div>
+
+            <div className={styles.ivaRow}>
+                <div className={styles.ivaText}>
+                    <p className={styles.ivaLabel}>Mi negocio declara IVA</p>
+                    <p className={styles.ivaHelp}>
+                        Actívalo si tu negocio declara IVA ante el SII; puedes cambiarlo después en tu perfil.
+                    </p>
+                </div>
+                <button
+                    type="button"
+                    role="switch"
+                    aria-checked={declaresIva}
+                    aria-label="Declarar IVA"
+                    className={`${styles.toggle} ${declaresIva ? styles.toggleOn : ''}`}
+                    onClick={() => setDeclaresIva((v) => !v)}
+                >
+                    <span className={styles.toggleKnob} />
+                </button>
+            </div>
+
             {error && <p className={styles.error}>{error}</p>}
+
             <Button
                 label="Crear cuenta"
                 type="submit"
+                variant="green"
                 isLoading={isLoading}
                 disabled={isDisabled}
+                className={styles.submitBtn}
             />
             <p className={styles.loginText}>
                 ¿Ya tienes cuenta?{' '}

@@ -9,51 +9,33 @@
 import React from 'react'
 import type { CartItem as CartItemType } from '../../../hooks/useCart'
 import CartItem from '../../molecules/CartItem/CartItem'
-import { formatCLP } from '../../../utils/formatters'
 import styles from './CartList.module.css'
 
 interface CartListProps {
     items: CartItemType[]
     onRemove: (productId: number) => void
     onQuantityChange: (productId: number, quantity: number) => void
-    total: number
 }
 
-const CartList: React.FC<CartListProps> = ({ items, onRemove, onQuantityChange, total }) => {
+const CartList: React.FC<CartListProps> = ({ items, onRemove, onQuantityChange }) => {
     if (items.length === 0) {
         return (
             <div className={styles.empty}>
-                <p>El carrito está vacio</p>
+                <p className={styles.emptyText}>El carrito está vacío</p>
             </div>
         )
     }
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <span>Codigo</span>
-                <span>Producto</span>
-                <span>Cant.</span>
-                <span>Precio unit.</span>
-                <span>Subtotal</span>
-                <span />
-            </div>
-
-            <div className={styles.list}>
-                {items.map((item) => (
-                    <CartItem
-                        key={item.productId}
-                        item={item}
-                        onRemove={onRemove}
-                        onQuantityChange={onQuantityChange}
-                    />
-                ))}
-            </div>
-
-            <div className={styles.footer}>
-                <span className={styles.totalLabel}>Total</span>
-                <span className={styles.totalValue}>{formatCLP(total)}</span>
-            </div>
+            {items.map((item) => (
+                <CartItem
+                    key={item.productId}
+                    item={item}
+                    onRemove={onRemove}
+                    onQuantityChange={onQuantityChange}
+                />
+            ))}
         </div>
     )
 }

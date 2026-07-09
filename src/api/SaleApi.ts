@@ -33,6 +33,7 @@ export interface SaleResponse {
     userId: number
     total: number
     paymentMethod: string
+    amountReceived: number
     change: number
     date: string
     items: SaleDetailResponse[]

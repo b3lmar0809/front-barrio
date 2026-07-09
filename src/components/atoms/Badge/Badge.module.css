@@ -32,3 +32,14 @@
     background-color: #dbeafe;
     color: #1e40af;
 }
+
+.category {
+    background-color: #ECFDF5;
+    color: #047857;
+    font-weight: 500;
+}
+
+.neutral {
+    background-color: #F1F5F9;
+    color: #475569;
+}

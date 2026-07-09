@@ -10,14 +10,16 @@
     align-items: center;
     justify-content: center;
     gap: 0.375rem;
-    padding: 0.4375rem 0.875rem;
+    height: 40px;
+    padding: 0 16px;
     font-size: 0.8125rem;
     font-weight: 500;
     line-height: 1;
-    border-radius: 0.375rem;
+    border-radius: 8px;
     border: 1px solid transparent;
     cursor: pointer;
     white-space: nowrap;
+    font-family: inherit;
     transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
 }
 
@@ -28,41 +30,42 @@
 
 /* primary */
 .primary {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: #059669;
+    border-color: #059669;
     color: #ffffff;
+    font-weight: 600;
 }
 
 .primary:hover:not(:disabled) {
-    background: #2563eb;
-    border-color: #2563eb;
+    background: #047857;
+    border-color: #047857;
 }
 
 .primary:active:not(:disabled) {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
+    background: #065f46;
+    border-color: #065f46;
 }
 
 /* secondary */
 .secondary {
-    background: #ffffff;
-    border-color: #cbd5e1;
-    color: #475569;
+    background: #F1F5F9;
+    border-color: transparent;
+    color: #334155;
 }
 
 .secondary:hover:not(:disabled) {
-    background: #f1f5f9;
-    border-color: #94a3b8;
+    background: #E2E8F0;
+    border-color: transparent;
 }
 
 .secondary:active:not(:disabled) {
-    background: #e2e8f0;
+    background: #CBD5E1;
 }
 
 /* danger */
 .danger {
-    background: #ffffff;
-    border-color: #fca5a5;
+    background: transparent;
+    border-color: #FECACA;
     color: #dc2626;
 }
 
@@ -73,6 +76,32 @@
 
 .danger:active:not(:disabled) {
     background: #fee2e2;
+}
+
+/* green */
+.green {
+    background: #059669;
+    border-color: #059669;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.15s;
+}
+
+.green:hover:not(:disabled) {
+    background: #047857;
+    border-color: #047857;
+    transform: translateY(-1px);
+}
+
+.green:active:not(:disabled) {
+    background: #065f46;
+    border-color: #065f46;
+    transform: translateY(0);
+}
+
+.green:focus-visible {
+    outline: 2px solid #059669;
+    outline-offset: 2px;
 }
 
 /* spinner */

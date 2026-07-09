@@ -18,6 +18,7 @@ export interface RegisterRequest {
   password: string
   companyName: string
   rut: string
+  declaresIva?: boolean
 }
 
 export interface AuthResponse {
@@ -25,8 +26,16 @@ export interface AuthResponse {
   name: string
   email: string
   companyName: string
+  rut: string
   planType: string
   planLimit: number | null
+  declaresIva: boolean
+}
+
+export interface UpdateProfileRequest {
+  companyName?: string
+  rut?: string
+  declaresIva?: boolean
 }
 
 export const loginUser = async (data: LoginRequest): Promise<AuthResponse> => {
@@ -45,5 +54,10 @@ export const logoutUser = async (): Promise<void> => {
 
 export const getMe = async (): Promise<AuthResponse> => {
   const response = await axiosInstance.get<AuthResponse>('/auth/me')
+  return response.data
+}
+
+export const updateProfile = async (data: UpdateProfileRequest): Promise<AuthResponse> => {
+  const response = await axiosInstance.patch<AuthResponse>('/auth/profile', data)
   return response.data
 }
